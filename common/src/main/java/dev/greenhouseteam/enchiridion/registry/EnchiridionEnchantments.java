@@ -118,7 +118,7 @@ public class EnchiridionEnchantments {
         Enchantment crumble = Enchantment.enchantment(
                 Enchantment.definition(pickaxeEnchantable, 2, 1, Enchantment.constantCost(15), Enchantment.constantCost(65), 4, EquipmentSlotGroup.MAINHAND)
                 ).exclusiveWith(miningExclusiveSet)
-                .withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect("enchantment.enchiridion.crumble", Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(8.0F), AttributeModifier.Operation.ADD_VALUE, UUID.fromString("031e1965-9647-4271-8bf2-7aecdd20ab09")),
+                .withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.crumble"), Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(8.0F), AttributeModifier.Operation.ADD_VALUE),
                         AllOfCondition.allOf(
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
@@ -129,7 +129,7 @@ public class EnchiridionEnchantments {
                                                 EntityPredicate.Builder.entity()
                                                         .effects(MobEffectsPredicate.Builder.effects()
                                                                 .and(MobEffects.DIG_SPEED, new MobEffectsPredicate.MobEffectInstancePredicate())))))
-                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect("enchantment.enchiridion.crumble", Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(16.0F), AttributeModifier.Operation.ADD_VALUE, UUID.fromString("031e1965-9647-4271-8bf2-7aecdd20ab09")),
+                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.crumble"), Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(16.0F), AttributeModifier.Operation.ADD_VALUE),
                         AllOfCondition.allOf(
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
@@ -140,7 +140,7 @@ public class EnchiridionEnchantments {
                                                 .effects(MobEffectsPredicate.Builder.effects()
                                                         .and(MobEffects.DIG_SPEED, new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.exactly(0), MinMaxBounds.Ints.ANY, Optional.empty(), Optional.empty()))))
                         )
-                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect("enchantment.enchiridion.crumble", Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(32.0F), AttributeModifier.Operation.ADD_VALUE, UUID.fromString("031e1965-9647-4271-8bf2-7aecdd20ab09")),
+                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.crumble"), Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(32.0F), AttributeModifier.Operation.ADD_VALUE),
                         AllOfCondition.allOf(
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
@@ -151,7 +151,7 @@ public class EnchiridionEnchantments {
                                                 .effects(MobEffectsPredicate.Builder.effects()
                                                         .and(MobEffects.DIG_SPEED, new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.atLeast(1), MinMaxBounds.Ints.ANY, Optional.empty(), Optional.empty()))))
                         )
-                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect("enchantment.enchiridion.crumble.harder_stone", Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(0.4F), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, UUID.fromString("e2fd9d91-1220-438d-ad67-cc11f499129f")),
+                ).withEffect(EnchiridionEnchantmentEffectComponents.TARGET_BLOCK_CHANGED, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.crumble.harder_stone"), Attributes.MINING_EFFICIENCY, LevelBasedValue.constant(0.4F), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
                         LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                 .setBlock(
                                         BlockPredicate.Builder.block()
@@ -173,14 +173,14 @@ public class EnchiridionEnchantments {
                 ).withSpecialEffect(EnchiridionEnchantmentEffectComponents.VEHICLE_CHANGED, List.of(new RidingConditionalEffect<>(
                         RidingTarget.THIS,
                         RidingTarget.THIS,
-                        new EnchantmentAttributeEffect("enchantment.enchiridion.jousting", Attributes.ENTITY_INTERACTION_RANGE, LevelBasedValue.perLevel(1.0F, 0.5F), AttributeModifier.Operation.ADD_VALUE, UUID.fromString("d85d7660-c3d6-4d43-b5a0-279e79ab8ff0")),
+                        new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.jousting"), Attributes.ENTITY_INTERACTION_RANGE, LevelBasedValue.perLevel(1.0F, 0.5F), AttributeModifier.Operation.ADD_VALUE),
                         InvertedLootItemCondition.invert(
                                 LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
                                         .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(Enchiridion.EntityTypeTags.PREVENTS_JOUSTING))))).build()))
                 ).build(JOUSTING.location());
         Enchantment reach = Enchantment.enchantment(
                 Enchantment.definition(miningEnchantable, 1, 2, Enchantment.dynamicCost(12, 7), Enchantment.constantCost(50), 2, EquipmentSlotGroup.MAINHAND)
-                ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect("enchantment.enchiridion.reach", Attributes.BLOCK_INTERACTION_RANGE, LevelBasedValue.perLevel(0.5F, 0.5F), AttributeModifier.Operation.ADD_VALUE, UUID.fromString("164c937c-f04c-4730-b8e9-d299a3a187fa")))
+                ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.reach"), Attributes.BLOCK_INTERACTION_RANGE, LevelBasedValue.perLevel(0.5F, 0.5F), AttributeModifier.Operation.ADD_VALUE))
                 .build(REACH.location());
 
         context.register(ASHES_CURSE, ashesCurse);

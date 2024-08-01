@@ -36,7 +36,7 @@ public class ItemRendererMixin {
     @Shadow @Final private ItemModelShaper itemModelShaper;
 
     @ModifyReturnValue(method = "getModel", at = @At("RETURN"))
-    private BakedModel enchiridion$renderSpecialBook(BakedModel model, ItemStack stack, Level level, @Nullable LivingEntity entity, int $$3, @Share("textColor") LocalRef<TextColor> textColor) {
+    private BakedModel enchiridion$renderSpecialBook(BakedModel model, ItemStack stack, Level level, @Nullable LivingEntity entity, int light, @Share("textColor") LocalRef<TextColor> textColor) {
         if (!stack.is(Items.ENCHANTED_BOOK))
             return model;
 
@@ -55,7 +55,7 @@ public class ItemRendererMixin {
         }
         ClientLevel clientLevel = level instanceof ClientLevel ? (ClientLevel)level : null;
         BakedModel newModel = ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(first.value().fullEnchantedBookModelLocation().orElse(EnchiridionModelUtil.ENCHANTED_BOOK_COLORED));
-        newModel = newModel.getOverrides().resolve(newModel, stack, clientLevel, entity, $$3);
+        newModel = newModel.getOverrides().resolve(newModel, stack, clientLevel, entity, light);
 
         if (newModel == null) {
             Enchiridion.LOGGER.warn("Could not find item model \"{}\".", first.value().fullEnchantedBookModelLocation().get());

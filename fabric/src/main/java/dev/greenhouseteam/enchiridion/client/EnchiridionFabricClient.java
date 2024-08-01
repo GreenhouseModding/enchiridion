@@ -22,7 +22,7 @@ public class EnchiridionFabricClient implements ClientModInitializer {
                 CompletableFuture.completedFuture(EnchiridionModelUtil.getEnchiridionModels(resourceManager)),
                 (data, pluginContext) -> {
                     pluginContext.addModels(data);
-                    pluginContext.resolveModel().register(context -> EnchiridionModelUtil.getVariantModel(context.id(), context::getOrLoadModel));
+                    pluginContext.resolveModel().register(context -> context.getOrLoadModel(context.id()));
                 });
 
         ItemTooltipCallback.EVENT.register(TooltipUtil::modifyEnchantmentTooltips);
