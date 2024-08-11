@@ -3,6 +3,7 @@ package dev.greenhouseteam.enchiridion.util;
 import com.mojang.datafixers.util.Pair;
 import dev.greenhouseteam.enchiridion.enchantment.category.ItemEnchantmentCategories;
 import dev.greenhouseteam.enchiridion.registry.EnchiridionDataComponents;
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenCustomHashSet;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
@@ -14,17 +15,21 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.stream.IntStream;
 
 public class CreativeTabUtil {
-    public static void sortEnchantmentsBasedOnCategory(List<ItemStack> stacks, HolderLookup.Provider provider) {
-        if (stacks.stream().anyMatch(stack -> !EnchiridionUtil.getEnchantmentsOrStoredEnchantments(stack).isEmpty())) {
+    public static void sortEnchantmentsBasedOnCategory(Set<ItemStack> original, HolderLookup.Provider provider) {
+        if (original.stream().anyMatch(stack -> !EnchiridionUtil.getEnchantmentsOrStoredEnchantments(stack).isEmpty())) {
+            ObjectLinkedOpenCustomHashSet<ItemStack> stacks = (ObjectLinkedOpenCustomHashSet<ItemStack>)original;
+            List<ItemStack> returnStackList = new ArrayList<>();
             List<Pair<Integer, ItemStack>> indexList = new ArrayList<>(IntStream.range(0, stacks.size())
                     .filter(i -> !EnchiridionUtil.getEnchantmentsOrStoredEnchantments(stacks.get(i)).isEmpty())
                     .mapToObj(i -> Pair.of(i, stacks.get(i))).toList());
 
             for (Pair<Integer, ItemStack> stack : indexList)
-                stacks.set(stack.getFirst(), ItemStack.EMPTY);
+                returnStackList.set(stack.getFirst(), ItemStack.EMPTY);
 
             List<Integer> intList = indexList.stream().map(Pair::getFirst).toList();
             List<Item> itemList = indexList.stream().map(pair -> pair.getSecond().getItem()).toList();
@@ -62,7 +67,10 @@ public class CreativeTabUtil {
             });
 
             for (int i = 0; i < intList.size(); ++i)
-                stacks.set(intList.get(i), stackList.get(i));
+                returnStackList.set(intList.get(i), stackList.get(i));
+
+            original.clear();
+            original.addAll(returnStackList);
         }
     }
 }

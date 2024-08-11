@@ -70,12 +70,12 @@ tasks {
             attributes["Implementation-Title"] = project.name
             attributes["Implementation-Version"] = archiveVersion
             attributes["Implementation-Vendor"] = Properties.MOD_AUTHOR
-            attributes["Built-On-Minecraft"] = Versions.INTERNAL_MINECRAFT
+            attributes["Built-On-Minecraft"] = Versions.MINECRAFT
         }
     }
 
     val expandProps = mapOf(
-        "version" to Versions.MOD,
+        "mod_version" to Versions.MOD,
         "group" to project.group, //Else we target the task's group.
         "minecraft_version" to Versions.MINECRAFT,
         "fabric_api_version" to Versions.FABRIC_API,
@@ -84,8 +84,8 @@ tasks {
         "fabric_loader_range" to Versions.FABRIC_LOADER_RANGE,
         "mod_name" to Properties.MOD_NAME,
         "mod_author" to Properties.MOD_AUTHOR,
-        "mod_contributors" to Properties.MOD_CONTRIBUTORS,
-        "fabric_mod_contributors" to createFabricContributors(),
+        "neoforge_mod_contributors" to Properties.MOD_CONTRIBUTORS.joinToString(),
+        "fabric_mod_contributors" to Properties.MOD_CONTRIBUTORS.joinToString(separator = "\",\n\t\t\""),
         "mod_id" to Properties.MOD_ID,
         "mod_license" to Properties.LICENSE,
         "mod_description" to Properties.DESCRIPTION,
@@ -94,7 +94,6 @@ tasks {
         "neoforge_loader_version_range" to Versions.NEOFORGE_LOADER_RANGE,
         "java_version" to Versions.JAVA,
         "homepage" to Properties.HOMEPAGE,
-        "issues" to Properties.ISSUE_TRACKER,
         "sources" to Properties.GITHUB_REPO
     )
 
@@ -107,21 +106,6 @@ tasks {
         }
         exclude("\\.cache")
     }
-}
-
-fun createFabricContributors() : String {
-    val string = StringBuilder();
-    val contributors = Properties.MOD_CONTRIBUTORS.split(", ")
-    var count = 0
-    for (contributor in contributors) {
-        if (count > 0)
-            string.append("\t\t")
-        ++count
-        string.append("\"${contributor}\"")
-        if (count < contributors.size)
-            string.append(",\n")
-    }
-    return string.toString()
 }
 
 publishing {

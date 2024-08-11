@@ -1,38 +1,53 @@
-
-import net.neoforged.gradle.dsl.common.runs.ide.extensions.IdeaRunExtension
+import dev.greenhouseteam.enchiridion.gradle.Properties
+import dev.greenhouseteam.enchiridion.gradle.Versions
 import org.apache.tools.ant.filters.LineContains
 
 plugins {
     id("enchiridion.loader")
-    id("net.neoforged.gradle.userdev") version "7.0.117"
+    id("net.neoforged.moddev")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
-val mod_id: String by project
-val neoforge_version: String by project
+neoForge {
+    version = Versions.NEOFORGE
+    parchment {
+        minecraftVersion = Versions.PARCHMENT_MINECRAFT
+        mappingsVersion = Versions.PARCHMENT
+    }
+    addModdingDependenciesTo(sourceSets["test"])
 
-val at = file("src/main/resources/${mod_id}.cfg");
-if (at.exists())
-    minecraft.accessTransformers.file(at)
+    val at = project(":common").file("src/main/resources/${Properties.MOD_ID}.cfg")
+    if (at.exists())
+        setAccessTransformers(at)
+    validateAccessTransformers = true
 
-runs {
-    configureEach {
-        modSource(sourceSets["main"])
-        modSource(sourceSets["test"])
-        systemProperty("neoforge.enabledGameTestNamespaces", mod_id)
-        jvmArguments("-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true")
-        extensions.configure<IdeaRunExtension>("idea") {
-            primarySourceSet = sourceSets["test"]
+    runs {
+        configureEach {
+            systemProperty("forge.logging.markers", "REGISTRIES")
+            systemProperty("forge.logging.console.level", "debug")
+            systemProperty("neoforge.enabledGameTestNamespaces", Properties.MOD_ID)
+        }
+        create("client") {
+            client()
+            gameDirectory.set(file("runs/client"))
+            sourceSet = sourceSets["test"]
+            jvmArguments.set(setOf("-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true"))
+        }
+        create("server") {
+            server()
+            gameDirectory.set(file("runs/server"))
+            programArgument("--nogui")
+            sourceSet = sourceSets["test"]
+            jvmArguments.set(setOf("-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true"))
         }
     }
-    register("client") {
-    }
-    register("server") {
-        programArgument("--nogui")
-    }
-}
 
-dependencies {
-    implementation("net.neoforged:neoforge:${neoforge_version}")
+    mods {
+        register(Properties.MOD_ID) {
+            sourceSet(sourceSets["main"])
+            sourceSet(sourceSets["test"])
+        }
+    }
 }
 
 tasks {
@@ -40,5 +55,25 @@ tasks {
         filesMatching("*.mixins.json") {
             filter<LineContains>("negate" to true, "contains" to setOf("refmap"))
         }
+    }
+}
+
+publishMods {
+    file.set(tasks.named<Jar>("jar").get().archiveFile)
+    modLoaders.add("neoforge")
+    changelog = rootProject.file("CHANGELOG.md").readText()
+    version = "${Versions.MOD}+${Versions.MINECRAFT}-neoforge"
+    type = STABLE
+
+    modrinth {
+        projectId = Properties.MODRINTH_PROJECT_ID
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+
+        minecraftVersions.add(Versions.MINECRAFT)
+    }
+
+    github {
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        parent(project(":common").tasks.named("publishGithub"))
     }
 }

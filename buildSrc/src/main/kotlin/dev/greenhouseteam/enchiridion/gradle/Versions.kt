@@ -3,8 +3,11 @@ package dev.greenhouseteam.enchiridion.gradle
 object Versions {
     const val MOD = "1.0.0-alpha.1"
 
-    const val MINECRAFT = "1.21"
-    const val INTERNAL_MINECRAFT = "1.21"
+    const val MINECRAFT = "1.21.1"
+    const val PARCHMENT_MINECRAFT = "1.21"
+    const val NEOFORM = "$MINECRAFT-20240808.144430"
+    const val PARCHMENT = "2024.07.07"
+
 
     const val FABRIC_API = "0.100.8+1.21"
     const val FABRIC_LOADER = "0.15.11"

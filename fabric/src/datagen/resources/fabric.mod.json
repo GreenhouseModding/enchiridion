@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "id": "${mod_id}",
+    "id": "${mod_id}_datagen",
     "version": "${mod_version}+${minecraft_version}",
     "name": "${mod_name}",
     "description": "${mod_description}",
@@ -16,24 +16,12 @@
         "sources": "${sources}"
     },
     "license": "${mod_license}",
-    "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
-        "main": [
-            "dev.greenhouseteam.enchiridion.fabric.EnchiridionFabric"
-        ],
-        "client": [
-            "dev.greenhouseteam.enchiridion.fabric.client.EnchiridionFabricClient"
-        ],
         "fabric-datagen": [
-            "dev.greenhouseteam.enchiridion.fabric.datagen.EnchiridionDatagen"
+            "dev.greenhouseteam.enchiridion.datagen.EnchiridionDatagen"
         ]
     },
-    "accessWidener": "enchiridion.accesswidener",
-    "mixins": [
-        "${mod_id}.mixins.json",
-        "${mod_id}.fabric.mixins.json"
-    ],
     "depends": {
         "fabricloader": "${fabric_loader_range}",
         "fabric-api": "*",

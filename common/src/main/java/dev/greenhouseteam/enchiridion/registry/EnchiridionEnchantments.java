@@ -1,6 +1,7 @@
 package dev.greenhouseteam.enchiridion.registry;
 
 import dev.greenhouseteam.enchiridion.Enchiridion;
+import dev.greenhouseteam.enchiridion.EnchiridionTags;
 import dev.greenhouseteam.enchiridion.enchantment.effects.ExtinguishEffect;
 import dev.greenhouseteam.enchiridion.enchantment.effects.FreezeEffect;
 import dev.greenhouseteam.enchiridion.enchantment.effects.PreventHungerConsumptionEffect;
@@ -73,15 +74,15 @@ public class EnchiridionEnchantments {
         HolderSet<Item> miningEnchantable = items.getOrThrow(ItemTags.MINING_ENCHANTABLE);
         HolderSet<Item> swordEnchantable = items.getOrThrow(ItemTags.SWORD_ENCHANTABLE);
 
-        HolderSet<Item> ashesEnchantable = items.getOrThrow(Enchiridion.ItemTags.ASHES_ENCHANTABLE);
-        HolderSet<Item> iceStrikeEnchantable = items.getOrThrow(Enchiridion.ItemTags.ICE_STRIKE_ENCHANTABLE);
-        HolderSet<Item> iceStrikePrimaryEnchantable = items.getOrThrow(Enchiridion.ItemTags.ICE_STRIKE_PRIMARY_ENCHANTABLE);
-        HolderSet<Item> pickaxeEnchantable = items.getOrThrow(Enchiridion.ItemTags.PICKAXE_ENCHANTABLE);
+        HolderSet<Item> ashesEnchantable = items.getOrThrow(EnchiridionTags.ItemTags.ASHES_ENCHANTABLE);
+        HolderSet<Item> iceStrikeEnchantable = items.getOrThrow(EnchiridionTags.ItemTags.ICE_STRIKE_ENCHANTABLE);
+        HolderSet<Item> iceStrikePrimaryEnchantable = items.getOrThrow(EnchiridionTags.ItemTags.ICE_STRIKE_PRIMARY_ENCHANTABLE);
+        HolderSet<Item> pickaxeEnchantable = items.getOrThrow(EnchiridionTags.ItemTags.PICKAXE_ENCHANTABLE);
 
         HolderGetter<Enchantment> enchantments = context.lookup(Registries.ENCHANTMENT);
 
         HolderSet<Enchantment> miningExclusiveSet = enchantments.getOrThrow(EnchantmentTags.MINING_EXCLUSIVE);
-        HolderSet<Enchantment> elementalExclusiveSet = enchantments.getOrThrow(Enchiridion.EnchantmentTags.ELEMENTAL_EXCLUSIVE);
+        HolderSet<Enchantment> elementalExclusiveSet = enchantments.getOrThrow(EnchiridionTags.EnchantmentTags.ELEMENTAL_EXCLUSIVE);
 
         HolderGetter<DamageType> damageType = context.lookup(Registries.DAMAGE_TYPE);
         Holder<DamageType> freeze = damageType.getOrThrow(DamageTypes.FREEZE);
@@ -97,12 +98,12 @@ public class EnchiridionEnchantments {
                         DamageSourceCondition.hasDamageSource(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY)))
                                 .and(InvertedLootItemCondition.invert(
                                         LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
-                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(Enchiridion.EntityTypeTags.IGNORES_BARDING)))))))
+                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EnchiridionTags.EntityTypeTags.IGNORES_BARDING)))))))
                 .withEffect(EnchiridionEnchantmentEffectComponents.VEHICLE_DAMAGE_PROTECTION, new AddValue(LevelBasedValue.perLevel(2.0F)),
                         DamageSourceCondition.hasDamageSource(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.isNot(DamageTypeTags.BYPASSES_INVULNERABILITY)))
                                 .and(InvertedLootItemCondition.invert(
                                         LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
-                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(Enchiridion.EntityTypeTags.IGNORES_BARDING))))
+                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EnchiridionTags.EntityTypeTags.IGNORES_BARDING))))
                                                 .or(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
                                                         .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityType.PLAYER)))))))
                                 .and(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
@@ -113,7 +114,7 @@ public class EnchiridionEnchantments {
                                 .periodicTick(5))
                                 .and(InvertedLootItemCondition.invert(
                                         LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
-                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(Enchiridion.EntityTypeTags.IGNORES_BARDING)))))))
+                                                .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EnchiridionTags.EntityTypeTags.IGNORES_BARDING)))))))
                 .build(BARDING.location());
         Enchantment crumble = Enchantment.enchantment(
                 Enchantment.definition(pickaxeEnchantable, 2, 1, Enchantment.constantCost(15), Enchantment.constantCost(65), 4, EquipmentSlotGroup.MAINHAND)
@@ -123,7 +124,7 @@ public class EnchiridionEnchantments {
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
                                                 BlockPredicate.Builder.block()
-                                                        .of(Enchiridion.BlockTags.BASE_STONE))),
+                                                        .of(EnchiridionTags.BlockTags.BASE_STONE))),
                                 InvertedLootItemCondition.invert(
                                         LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
                                                 EntityPredicate.Builder.entity()
@@ -134,7 +135,7 @@ public class EnchiridionEnchantments {
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
                                                 BlockPredicate.Builder.block()
-                                                        .of(Enchiridion.BlockTags.BASE_STONE))),
+                                                        .of(EnchiridionTags.BlockTags.BASE_STONE))),
                                 LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
                                         EntityPredicate.Builder.entity()
                                                 .effects(MobEffectsPredicate.Builder.effects()
@@ -145,7 +146,7 @@ public class EnchiridionEnchantments {
                                 LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(
                                                 BlockPredicate.Builder.block()
-                                                        .of(Enchiridion.BlockTags.BASE_STONE))),
+                                                        .of(EnchiridionTags.BlockTags.BASE_STONE))),
                                 LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
                                         EntityPredicate.Builder.entity()
                                                 .effects(MobEffectsPredicate.Builder.effects()
@@ -155,7 +156,7 @@ public class EnchiridionEnchantments {
                         LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                 .setBlock(
                                         BlockPredicate.Builder.block()
-                                                .of(Enchiridion.BlockTags.HARDER_STONE)))
+                                                .of(EnchiridionTags.BlockTags.HARDER_STONE)))
                 ).build(CRUMBLE.location());
         Enchantment exhilarating = Enchantment.enchantment(
                 Enchantment.definition(miningEnchantable, 1, 1, Enchantment.dynamicCost(12, 4), Enchantment.constantCost(35), 1, EquipmentSlotGroup.MAINHAND)
@@ -176,7 +177,7 @@ public class EnchiridionEnchantments {
                         new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.jousting"), Attributes.ENTITY_INTERACTION_RANGE, LevelBasedValue.perLevel(1.0F, 0.5F), AttributeModifier.Operation.ADD_VALUE),
                         InvertedLootItemCondition.invert(
                                 LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
-                                        .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(Enchiridion.EntityTypeTags.PREVENTS_JOUSTING))))).build()))
+                                        .vehicle(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EnchiridionTags.EntityTypeTags.PREVENTS_JOUSTING))))).build()))
                 ).build(JOUSTING.location());
         Enchantment reach = Enchantment.enchantment(
                 Enchantment.definition(miningEnchantable, 1, 2, Enchantment.dynamicCost(12, 7), Enchantment.constantCost(50), 2, EquipmentSlotGroup.MAINHAND)

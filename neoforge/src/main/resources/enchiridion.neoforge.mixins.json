@@ -1,11 +1,17 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.example.examplemod.mixin",
+  "package": "dev.greenhouseteam.enchiridion.neoforge.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "AnvilMenuMixin",
+    "ChunkMapAccessor",
+    "EnchantCommandMixin",
+    "EnchantmentHelperMixin",
+    "EnchantRandomlyFunctionMixin",
+    "EntityTrackerAccessor"
+  ],
   "client": [
-    "MixinTitleScreen"
   ],
   "server": [],
   "injectors": {
