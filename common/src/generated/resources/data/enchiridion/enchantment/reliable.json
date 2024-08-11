@@ -1,0 +1,61 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchiridion.reliable"
+  },
+  "effects": {
+    "enchiridion:run_functions_on_fishing_loot": [
+      {
+        "effect": [
+          {
+            "functions": [
+              {
+                "add": true,
+                "damage": {
+                  "type": "minecraft:uniform",
+                  "max": 0.4,
+                  "min": 0.15
+                },
+                "function": "minecraft:set_damage"
+              }
+            ],
+            "predicate": {
+              "items": "#minecraft:enchantable/durability"
+            }
+          },
+          {
+            "functions": [
+              {
+                "add": false,
+                "function": "minecraft:set_enchantments"
+              },
+              {
+                "function": "minecraft:enchant_with_levels",
+                "levels": 35.0,
+                "options": "#minecraft:on_random_loot"
+              }
+            ],
+            "predicate": {
+              "items": "#enchiridion:inclusive_enchantables"
+            },
+            "table": "minecraft:gameplay/fishing/treasure"
+          }
+        ]
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/fishing",
+  "weight": 2
+}

@@ -6,6 +6,7 @@ import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantedFrozenSta
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantmentLevelUpSeedsClientboundPacket;
 import dev.greenhouseteam.enchiridion.fabric.registry.EnchiridionAttachments;
 import dev.greenhouseteam.enchiridion.platform.EnchiridionPlatformHelper;
+import dev.greenhouseteam.enchiridion.platform.Platform;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -25,8 +26,8 @@ import java.util.Optional;
 public class EnchiridionPlatformHelperFabric implements EnchiridionPlatformHelper {
 
     @Override
-    public String getPlatformName() {
-        return "Fabric";
+    public Platform getPlatform() {
+        return Platform.FABRIC;
     }
 
     @Override

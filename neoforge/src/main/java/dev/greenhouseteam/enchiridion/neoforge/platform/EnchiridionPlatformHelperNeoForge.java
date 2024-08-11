@@ -6,6 +6,7 @@ import dev.greenhouseteam.enchiridion.neoforge.mixin.EntityTrackerAccessor;
 import dev.greenhouseteam.enchiridion.neoforge.registry.EnchiridionAttachments;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantmentLevelUpSeedsClientboundPacket;
 import dev.greenhouseteam.enchiridion.platform.EnchiridionPlatformHelper;
+import dev.greenhouseteam.enchiridion.platform.Platform;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ChunkMap;
@@ -28,20 +29,17 @@ import java.util.stream.Collectors;
 public class EnchiridionPlatformHelperNeoForge implements EnchiridionPlatformHelper {
 
     @Override
-    public String getPlatformName() {
-
-        return "NeoForge";
+    public Platform getPlatform() {
+        return Platform.NEOFORGE;
     }
 
     @Override
     public boolean isModLoaded(String modId) {
-
         return ModList.get().isLoaded(modId);
     }
 
     @Override
     public boolean isDevelopmentEnvironment() {
-
         return !FMLLoader.isProduction();
     }
 

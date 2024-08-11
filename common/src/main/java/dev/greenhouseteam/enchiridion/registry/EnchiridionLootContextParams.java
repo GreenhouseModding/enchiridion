@@ -2,6 +2,7 @@ package dev.greenhouseteam.enchiridion.registry;
 
 import dev.greenhouseteam.enchiridion.Enchiridion;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 
