@@ -125,7 +125,7 @@ public class EnchiridionPlatformHelperFabric implements EnchiridionPlatformHelpe
     }
 
     @Override
-    public boolean isEnchantmentCompatibleAcceptable(ItemStack stack, Holder<Enchantment> enchantment) {
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
         return stack.canBeEnchantedWith(enchantment, EnchantingContext.ACCEPTABLE);
     }
 }
