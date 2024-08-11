@@ -1,9 +1,11 @@
 import dev.greenhouseteam.enchiridion.gradle.Properties
 import dev.greenhouseteam.enchiridion.gradle.Versions
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("enchiridion.loader")
-    id("fabric-loom") version "1.6-SNAPSHOT"
+    id("fabric-loom")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 repositories {
@@ -13,8 +15,17 @@ repositories {
     }
 }
 
+sourceSets {
+    create("datagen") {
+        compileClasspath += main.get().compileClasspath
+        runtimeClasspath += main.get().runtimeClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+    }
+}
+
 dependencies {
-    minecraft("com.mojang:minecraft:${Versions.INTERNAL_MINECRAFT}")
+    minecraft("com.mojang:minecraft:${Versions.MINECRAFT}")
     mappings(loom.officialMojangMappings())
 
     modImplementation("net.fabricmc:fabric-loader:${Versions.FABRIC_LOADER}")
@@ -23,7 +34,7 @@ dependencies {
 }
 
 loom {
-    val aw = project(":common").file("src/main/resources/${Properties.MOD_ID}.accesswidener");
+    val aw = file("src/main/resources/${Properties.MOD_ID}.accesswidener");
     if (aw.exists())
         accessWidenerPath.set(aw)
     mixin {
@@ -53,12 +64,49 @@ loom {
         register("datagen") {
             server()
             configName = "Fabric Datagen"
-            setSource(sourceSets["test"])
+            setSource(sourceSets["datagen"])
             ideConfigGenerated(true)
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("../common/src/generated/resources")}")
-            vmArg("-Dfabric-api.datagen.modid=${Properties.MOD_ID}")
+            vmArg("-Dfabric-api.datagen.modid=${Properties.MOD_ID}_datagen")
             runDir("build/datagen")
         }
+    }
+}
+
+tasks {
+    named<ProcessResources>("processResources").configure {
+        exclude("${Properties.MOD_ID}.cfg")
+    }
+}
+
+publishMods {
+    file.set(tasks.named<Jar>("remapJar").get().archiveFile)
+    modLoaders.add("fabric")
+    changelog = rootProject.file("CHANGELOG.md").readText()
+    version = "${Versions.MOD}+${Versions.MINECRAFT}-fabric"
+    type = STABLE
+
+    curseforge {
+        projectId = Properties.CURSEFORGE_PROJECT_ID
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+
+        minecraftVersions.add(Versions.MINECRAFT)
+        javaVersions.add(JavaVersion.VERSION_21)
+
+        clientRequired = true
+        serverRequired = true
+    }
+
+    modrinth {
+        projectId = Properties.MODRINTH_PROJECT_ID
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+
+        minecraftVersions.add(Versions.MINECRAFT)
+    }
+
+    github {
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        parent(project(":common").tasks.named("publishGithub"))
     }
 }

@@ -23,42 +23,10 @@ public class Enchiridion {
     }
 
     public static ResourceLocation asResource(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     public static EnchiridionPlatformHelper getHelper() {
         return helper;
-    }
-
-
-    public static class BlockTags {
-        public static final TagKey<Block> BASE_STONE = TagKey.create(Registries.BLOCK, asResource("base_stone"));
-        public static final TagKey<Block> HARDER_STONE = TagKey.create(Registries.BLOCK, asResource("harder_stone"));
-    }
-
-    public static class EnchantmentTags {
-        public static final TagKey<Enchantment> PRIMARY_CATEGORY = TagKey.create(Registries.ENCHANTMENT, asResource("category/primary"));
-        public static final TagKey<Enchantment> SECONDARY_CATEGORY = TagKey.create(Registries.ENCHANTMENT, asResource("category/secondary"));
-        public static final TagKey<Enchantment> TERTIARY_CATEGORY = TagKey.create(Registries.ENCHANTMENT, asResource("category/tertiary"));
-        public static final TagKey<Enchantment> UNCATEGORISED_CATEGORY = TagKey.create(Registries.ENCHANTMENT, asResource("category/uncategorised"));
-
-        public static final TagKey<Enchantment> ELEMENTAL_EXCLUSIVE = TagKey.create(Registries.ENCHANTMENT, asResource("exclusive_set/elemental"));
-    }
-
-    public static class EntityTypeTags {
-        public static final TagKey<EntityType<?>> IGNORES_BARDING = TagKey.create(Registries.ENTITY_TYPE, asResource("ignores_barding"));
-        public static final TagKey<EntityType<?>> PREVENTS_JOUSTING = TagKey.create(Registries.ENTITY_TYPE, asResource("prevents_jousting"));
-    }
-
-    public static class ItemTags {
-        public static final TagKey<Item> ASHES_ENCHANTABLE = TagKey.create(Registries.ITEM, asResource("enchantable/ashes"));
-        public static final TagKey<Item> AXE_ENCHANTABLE = TagKey.create(Registries.ITEM, asResource("enchantable/axe"));
-        public static final TagKey<Item> PICKAXE_ENCHANTABLE = TagKey.create(Registries.ITEM, asResource("enchantable/pickaxe"));
-        public static final TagKey<Item> ICE_STRIKE_ENCHANTABLE = TagKey.create(Registries.ITEM, asResource("enchantable/ice_strike"));
-        public static final TagKey<Item> ICE_STRIKE_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, asResource("enchantable/ice_strike_primary"));
-    }
-
-    public static class FluidTags {
-        public static final TagKey<Fluid> ACTIVATES_IMPALING = TagKey.create(Registries.FLUID, asResource("activates_impaling"));
     }
 }

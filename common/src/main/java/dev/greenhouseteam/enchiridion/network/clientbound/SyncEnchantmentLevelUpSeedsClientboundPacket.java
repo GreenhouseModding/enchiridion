@@ -9,23 +9,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public record SyncEnchantmentLevelUpSeedsPacket(int entityId, int index, int seed, boolean clear) implements CustomPacketPayload {
+public record SyncEnchantmentLevelUpSeedsClientboundPacket(int entityId, int index, int seed, boolean clear) implements CustomPacketPayload {
     public static final ResourceLocation ID = Enchiridion.asResource("sync_enchantment_level_up_seeds");
-    public static final Type<SyncEnchantmentLevelUpSeedsPacket> TYPE = new Type<>(ID);
+    public static final Type<SyncEnchantmentLevelUpSeedsClientboundPacket> TYPE = new Type<>(ID);
 
-    public static final StreamCodec<FriendlyByteBuf, SyncEnchantmentLevelUpSeedsPacket> STREAM_CODEC = CustomPacketPayload.codec(
-            SyncEnchantmentLevelUpSeedsPacket::write, SyncEnchantmentLevelUpSeedsPacket::new
+    public static final StreamCodec<FriendlyByteBuf, SyncEnchantmentLevelUpSeedsClientboundPacket> STREAM_CODEC = CustomPacketPayload.codec(
+            SyncEnchantmentLevelUpSeedsClientboundPacket::write, SyncEnchantmentLevelUpSeedsClientboundPacket::new
     );
 
-    public static SyncEnchantmentLevelUpSeedsPacket add(int entityId, int index, int seed) {
-        return new SyncEnchantmentLevelUpSeedsPacket(entityId, index, seed, false);
+    public static SyncEnchantmentLevelUpSeedsClientboundPacket add(int entityId, int index, int seed) {
+        return new SyncEnchantmentLevelUpSeedsClientboundPacket(entityId, index, seed, false);
     }
 
-    public static SyncEnchantmentLevelUpSeedsPacket clear(int entityId) {
-        return new SyncEnchantmentLevelUpSeedsPacket(entityId, -1, -1, true);
+    public static SyncEnchantmentLevelUpSeedsClientboundPacket clear(int entityId) {
+        return new SyncEnchantmentLevelUpSeedsClientboundPacket(entityId, -1, -1, true);
     }
 
-    public SyncEnchantmentLevelUpSeedsPacket(FriendlyByteBuf buf) {
+    public SyncEnchantmentLevelUpSeedsClientboundPacket(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean());
     }
 
