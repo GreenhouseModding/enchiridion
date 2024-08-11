@@ -1,6 +1,8 @@
 package dev.greenhouseteam.enchiridion.fabric.client;
 
+import dev.greenhouseteam.enchiridion.client.EnchiridionClient;
 import dev.greenhouseteam.enchiridion.client.util.EnchiridionModelUtil;
+import dev.greenhouseteam.enchiridion.fabric.client.platform.EnchiridionClientPlatformHelperFabric;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantScrollIndexClientboundPacket;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantedFrozenStateClientboundPacket;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantmentLevelUpSeedsClientboundPacket;
@@ -16,14 +18,11 @@ public class EnchiridionFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        EnchiridionClient.init(new EnchiridionClientPlatformHelperFabric());
         registerPackets();
 
-        PreparableModelLoadingPlugin.register((resourceManager, executor) ->
-                CompletableFuture.completedFuture(EnchiridionModelUtil.getEnchiridionModels(resourceManager)),
-                (data, pluginContext) -> {
-                    pluginContext.addModels(data);
-                    pluginContext.resolveModel().register(context -> context.getOrLoadModel(context.id()));
-                });
+        PreparableModelLoadingPlugin.register(EnchiridionModelUtil::getEnchiridionModels,
+                (data, pluginContext) -> pluginContext.addModels(data));
 
         ItemTooltipCallback.EVENT.register(TooltipUtil::modifyEnchantmentTooltips);
     }

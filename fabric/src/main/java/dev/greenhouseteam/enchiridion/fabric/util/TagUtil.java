@@ -1,6 +1,5 @@
 package dev.greenhouseteam.enchiridion.fabric.util;
 
-import dev.greenhouseteam.enchiridion.Enchiridion;
 import dev.greenhouseteam.enchiridion.EnchiridionTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -17,8 +16,6 @@ import java.util.Map;
 public class TagUtil {
     // Vanilla loads tags after Loot Tables are loaded, so we need to do something about that.
     private static Collection<Holder<Block>> EARLY_BASE_STONE_TAG;
-
-
 
     public static boolean isInBaseStoneTag(Holder<Block> block, ResourceManager manager, HolderLookup<Block> lookup) {
         if (EARLY_BASE_STONE_TAG == null) {

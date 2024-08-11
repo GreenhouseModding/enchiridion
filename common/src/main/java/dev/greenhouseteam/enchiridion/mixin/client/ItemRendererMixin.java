@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import dev.greenhouseteam.enchiridion.Enchiridion;
+import dev.greenhouseteam.enchiridion.client.EnchiridionClient;
 import dev.greenhouseteam.enchiridion.client.util.EnchiridionModelUtil;
 import dev.greenhouseteam.enchiridion.enchantment.category.EnchantmentCategory;
 import dev.greenhouseteam.enchiridion.enchantment.category.ItemEnchantmentCategories;
@@ -42,26 +43,27 @@ public class ItemRendererMixin {
 
         ItemEnchantments storedEnchantments = stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
         if (!((ItemEnchantmentsAccessor)storedEnchantments).enchiridion$shouldShowInTooltip() || storedEnchantments.isEmpty() || level.registryAccess().registryOrThrow(EnchiridionRegistries.ENCHANTMENT_CATEGORY).holders().filter(category -> category.isBound() && !category.is(EnchiridionEnchantmentCategories.CURSE)).noneMatch(category -> category.value().acceptedEnchantments().stream().findAny().isPresent()))
-            return ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(EnchiridionModelUtil.ENCHANTED_BOOK_RED);
+            return EnchiridionClient.getHelper().getModel(EnchiridionModelUtil.ENCHANTED_BOOK_RED);
 
         Holder<EnchantmentCategory> first = EnchiridionUtil.getFirstEnchantmentCategory(level.registryAccess(), stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY), stack.getOrDefault(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, ItemEnchantmentCategories.EMPTY));
 
         if (first == null || !first.isBound())
-            return ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(EnchiridionModelUtil.ENCHANTED_BOOK_MISC);
+            return EnchiridionClient.getHelper().getModel(EnchiridionModelUtil.ENCHANTED_BOOK_MISC);
 
         if (first.value().fullEnchantedBookModelLocation().isEmpty()) {
             textColor.set(first.value().color());
-            return ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(EnchiridionModelUtil.ENCHANTED_BOOK_COLORED);
+            return EnchiridionClient.getHelper().getModel(EnchiridionModelUtil.ENCHANTED_BOOK_COLORED);
         }
         ClientLevel clientLevel = level instanceof ClientLevel ? (ClientLevel)level : null;
-        BakedModel newModel = ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(first.value().fullEnchantedBookModelLocation().orElse(EnchiridionModelUtil.ENCHANTED_BOOK_COLORED));
-        newModel = newModel.getOverrides().resolve(newModel, stack, clientLevel, entity, light);
+        BakedModel newModel = EnchiridionClient.getHelper().getModel(first.value().fullEnchantedBookModelLocation().orElse(EnchiridionModelUtil.ENCHANTED_BOOK_COLORED));
 
         if (newModel == null) {
             Enchiridion.LOGGER.warn("Could not find item model \"{}\".", first.value().fullEnchantedBookModelLocation().get());
+        } else {
+            newModel = newModel.getOverrides().resolve(newModel, stack, clientLevel, entity, light);
         }
 
-        return newModel == null ? ((ModelManagerAccessor)this.itemModelShaper.getModelManager()).enchiridion$getBakedRegistry().get(EnchiridionModelUtil.ENCHANTED_BOOK_MISC) : newModel;
+        return newModel == null ? EnchiridionClient.getHelper().getModel(EnchiridionModelUtil.ENCHANTED_BOOK_MISC) : newModel;
     }
 
     @ModifyVariable(method = "renderQuadList", at = @At(value = "STORE", ordinal = 0), index = 11)

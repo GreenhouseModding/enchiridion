@@ -41,7 +41,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerTargetAc
     }
 
     @Unique
-    private Map<Holder<Enchantment>, Set<EnchantmentLocationBasedEffect>> enchiridion$activeBlockTargetEnchantmentEffects = new HashMap<>();
+    private final Map<Holder<Enchantment>, Set<EnchantmentLocationBasedEffect>> enchiridion$activeBlockTargetEnchantmentEffects = new HashMap<>();
 
     @Override
     public Map<Holder<Enchantment>, Set<EnchantmentLocationBasedEffect>> enchiridion$activeBlockTargetEnchantmentEffects() {

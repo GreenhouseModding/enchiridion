@@ -2,7 +2,11 @@ package dev.greenhouseteam.enchiridion.neoforge;
 
 import dev.greenhouseteam.enchiridion.Enchiridion;
 import dev.greenhouseteam.enchiridion.enchantment.category.EnchantmentCategory;
+import dev.greenhouseteam.enchiridion.neoforge.mixin.BuildCreativeModeTabContentsEventAccessor;
 import dev.greenhouseteam.enchiridion.neoforge.platform.EnchiridionPlatformHelperNeoForge;
+import dev.greenhouseteam.enchiridion.neoforge.registry.EnchiridionAttachments;
+import dev.greenhouseteam.enchiridion.neoforge.registry.EnchiridionLootItemConditions;
+import dev.greenhouseteam.enchiridion.neoforge.registry.EnchiridionLootModifiers;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantScrollIndexClientboundPacket;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantedFrozenStateClientboundPacket;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantmentLevelUpSeedsClientboundPacket;
@@ -14,21 +18,22 @@ import dev.greenhouseteam.enchiridion.registry.EnchiridionRegistries;
 import dev.greenhouseteam.enchiridion.registry.internal.RegistrationCallback;
 import dev.greenhouseteam.enchiridion.util.ClientRegistryAccessReference;
 import dev.greenhouseteam.enchiridion.util.CreativeTabUtil;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.common.util.InsertableLinkedOpenCustomHashSet;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
-import java.util.Set;
 import java.util.function.Consumer;
 
 @Mod(Enchiridion.MOD_ID)
@@ -40,10 +45,20 @@ public class EnchiridionNeoForge {
 
     @EventBusSubscriber(modid = Enchiridion.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
     public static class ModEvents {
-        @SubscribeEvent
+
+        // Make sure that other creative mode items have been added first.
+        @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void modifyCreativeTabs(BuildCreativeModeTabContentsEvent event) {
-            CreativeTabUtil.sortEnchantmentsBasedOnCategory((Set<ItemStack>) event.getTab().getDisplayItems(), event.getParameters().holders());
-            CreativeTabUtil.sortEnchantmentsBasedOnCategory((Set<ItemStack>) event.getTab().getSearchTabDisplayItems(), event.getParameters().holders());
+            CreativeTabUtil.sortEnchantmentsBasedOnCategory(event.getParentEntries().stream().toList(), stacks -> {
+                InsertableLinkedOpenCustomHashSet<ItemStack> tabStacks = ((BuildCreativeModeTabContentsEventAccessor)(Object)event).enchiridion$getParentEntries();
+                tabStacks.clear();
+                tabStacks.addAll(stacks);
+            }, event.getParameters().holders());
+            CreativeTabUtil.sortEnchantmentsBasedOnCategory(event.getSearchEntries().stream().toList(), stacks -> {
+                InsertableLinkedOpenCustomHashSet<ItemStack> tabStacks = ((BuildCreativeModeTabContentsEventAccessor)(Object)event).enchiridion$getSearchEntries();
+                tabStacks.clear();
+                tabStacks.addAll(stacks);
+            }, event.getParameters().holders());
         }
 
         @SubscribeEvent
@@ -57,9 +72,12 @@ public class EnchiridionNeoForge {
 
         @SubscribeEvent
         public static void registerContent(RegisterEvent event) {
+            register(event, EnchiridionAttachments::registerAll);
             register(event, EnchiridionDataComponents::registerAll);
             register(event, EnchiridionEnchantmentEffectComponents::registerAll);
             register(event, EnchiridionEntityEnchantmentEffects::registerAll);
+            register(event, EnchiridionLootItemConditions::registerAll);
+            register(event, EnchiridionLootModifiers::registerAll);
         }
 
         private static <T> void register(RegisterEvent event, Consumer<RegistrationCallback<T>> consumer) {

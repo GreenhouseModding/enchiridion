@@ -7,9 +7,7 @@
   "mixins": [
     "LootPoolAccessor",
     "LootTableBuilderAccessor",
-    "ReloadableServerRegistriesMixin",
-    "TagEntryAccessor",
-    "TagLoaderMixin"
+    "ReloadableServerRegistriesMixin"
   ],
   "client": [
     "client.MinecraftAccessor"

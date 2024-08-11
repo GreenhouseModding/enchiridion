@@ -47,6 +47,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
@@ -58,7 +59,6 @@ import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class EnchiridionFabric implements ModInitializer {
     public static MinecraftServer server;
@@ -73,8 +73,14 @@ public class EnchiridionFabric implements ModInitializer {
         Enchiridion.init(new EnchiridionPlatformHelperFabric());
 
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) -> {
-            CreativeTabUtil.sortEnchantmentsBasedOnCategory((Set<ItemStack>) group.getDisplayItems(), entries.getContext().holders());
-            CreativeTabUtil.sortEnchantmentsBasedOnCategory((Set<ItemStack>) group.getSearchTabDisplayItems(), entries.getContext().holders());
+            CreativeTabUtil.sortEnchantmentsBasedOnCategory(entries.getDisplayStacks(), stacks -> {
+                entries.getDisplayStacks().clear();
+                entries.getDisplayStacks().addAll(stacks);
+            }, entries.getContext().holders());
+            CreativeTabUtil.sortEnchantmentsBasedOnCategory(entries.getSearchTabStacks(), stack -> {
+                entries.getSearchTabStacks().clear();
+                entries.getSearchTabStacks().addAll(stack);
+            }, entries.getContext().holders());
         });
 
         LootTableEvents.MODIFY.register((key, table, source, provider) -> {
