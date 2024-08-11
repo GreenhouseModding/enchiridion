@@ -131,6 +131,9 @@ public class EnchiridionFabric implements ModInitializer {
         FabricLoader.getInstance().getModContainer(Enchiridion.MOD_ID).ifPresent(modContainer -> {
             ResourceManagerHelper.registerBuiltinResourcePack(Enchiridion.asResource("default_enchanted_books"), modContainer, Component.translatable("resourcePack.enchiridion.default_enchanted_books.name"), ResourcePackActivationType.NORMAL);
             ResourceManagerHelper.registerBuiltinResourcePack(Enchiridion.asResource("vanilla_enchantment_modifications"), modContainer, Component.translatable("dataPack.enchiridion.vanilla_enchantment_modifications.name"), ResourcePackActivationType.DEFAULT_ENABLED);
+            if (Enchiridion.ENCHANTMENT_DESCRIPTION_MODS.stream().anyMatch(s -> FabricLoader.getInstance().isModLoaded(s))) {
+                ResourceManagerHelper.registerBuiltinResourcePack(Enchiridion.asResource("enchantment_descriptions_compat"), modContainer, Component.translatable("resourcePack.enchiridion.enchantment_descriptions_compat.name"), ResourcePackActivationType.DEFAULT_ENABLED);
+            }
         });
     }
 
