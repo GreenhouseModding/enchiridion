@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -90,19 +91,34 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                     .add(EnchiridionEnchantments.ASHES_CURSE);
 
             getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
-                    .add(EnchiridionEnchantments.EXHILARATING)
-                    .add(EnchiridionEnchantments.ICE_STRIKE)
-                    .add(EnchiridionEnchantments.REACH);
+                    .add(
+                            EnchiridionEnchantments.DREDGE,
+                            EnchiridionEnchantments.EXHILARATING,
+                            EnchiridionEnchantments.EXPERIENCED,
+                            EnchiridionEnchantments.ICE_STRIKE,
+                            EnchiridionEnchantments.REACH,
+                            EnchiridionEnchantments.RELIABLE
+                    );
             getOrCreateTagBuilder(EnchantmentTags.TREASURE)
-                    .add(EnchiridionEnchantments.ASHES_CURSE)
-                    .add(EnchiridionEnchantments.CRUMBLE);
+                    .add(
+                            EnchiridionEnchantments.ASHES_CURSE,
+                            EnchiridionEnchantments.CRUMBLE
+                    );
 
             getOrCreateTagBuilder(EnchantmentTags.MINING_EXCLUSIVE)
                     .add(EnchiridionEnchantments.CRUMBLE);
 
             getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.ELEMENTAL_EXCLUSIVE)
-                    .add(Enchantments.FIRE_ASPECT)
-                    .add(EnchiridionEnchantments.ICE_STRIKE);
+                    .add(
+                            Enchantments.FIRE_ASPECT,
+                            EnchiridionEnchantments.ICE_STRIKE
+                    );
+
+            getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.FISHING_EXCLUSIVE)
+                    .add(
+                            Enchantments.LUCK_OF_THE_SEA,
+                            EnchiridionEnchantments.DREDGE
+                    );
 
             getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.PRIMARY_CATEGORY)
                     .add(
@@ -120,6 +136,7 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                             Enchantments.THORNS,
                             Enchantments.WIND_BURST,
                             EnchiridionEnchantments.CRUMBLE,
+                            EnchiridionEnchantments.DREDGE,
                             EnchiridionEnchantments.JOUSTING
                     );
             getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.SECONDARY_CATEGORY)
@@ -135,8 +152,10 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                             Enchantments.SWEEPING_EDGE,
                             Enchantments.SWIFT_SNEAK,
                             EnchiridionEnchantments.EXHILARATING,
+                            EnchiridionEnchantments.EXPERIENCED,
                             EnchiridionEnchantments.ICE_STRIKE,
-                            EnchiridionEnchantments.REACH
+                            EnchiridionEnchantments.REACH,
+                            EnchiridionEnchantments.RELIABLE
                     );
             getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.TERTIARY_CATEGORY)
                     .add(
@@ -177,8 +196,10 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                     .forceAddTag(BlockTags.BASE_STONE_NETHER)
                     .add(Blocks.END_STONE);
             getOrCreateTagBuilder(EnchiridionTags.BlockTags.HARDER_STONE)
-                    .add(Blocks.DEEPSLATE)
-                    .add(Blocks.END_STONE);
+                    .add(
+                            Blocks.DEEPSLATE,
+                            Blocks.END_STONE
+                    );
         }
     }
 
@@ -190,8 +211,10 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
         @Override
         protected void addTags(HolderLookup.Provider wrapperLookup) {
             getOrCreateTagBuilder(EnchiridionTags.EntityTypeTags.IGNORES_BARDING)
-                    .add(EntityType.BOAT)
-                    .add(EntityType.MINECART);
+                    .add(
+                            EntityType.BOAT,
+                            EntityType.MINECART
+                    );
             getOrCreateTagBuilder(EnchiridionTags.EntityTypeTags.PREVENTS_JOUSTING);
         }
     }
@@ -214,6 +237,10 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
             getOrCreateTagBuilder(EnchiridionTags.ItemTags.ICE_STRIKE_PRIMARY_ENCHANTABLE);
             getOrCreateTagBuilder(EnchiridionTags.ItemTags.PICKAXE_ENCHANTABLE)
                     .forceAddTag(ItemTags.PICKAXES);
+
+            getOrCreateTagBuilder(EnchiridionTags.ItemTags.INCLUSIVE_ENCHANTABLES)
+                    .forceAddTag(ConventionalItemTags.ENCHANTABLES)
+                    .add(Items.BOOK);
         }
     }
 

@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public interface EnchiridionPlatformHelper {
 
-    String getPlatformName();
+    Platform getPlatform();
 
     boolean isModLoaded(String modId);
 

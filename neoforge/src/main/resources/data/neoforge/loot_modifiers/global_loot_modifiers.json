@@ -1,6 +1,8 @@
 {
   "replace": false,
   "entries": [
-    "enchiridion:crumble"
+    "enchiridion:additional_enchanted_fishing_loot",
+    "enchiridion:crumble",
+    "enchiridion:run_enchanted_fishing_functions"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "type": "enchiridion:run_enchanted_fishing_functions",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/fishing"
+    }
+  ]
+}
