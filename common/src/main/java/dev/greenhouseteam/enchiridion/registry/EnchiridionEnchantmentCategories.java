@@ -1,6 +1,7 @@
 package dev.greenhouseteam.enchiridion.registry;
 
 import dev.greenhouseteam.enchiridion.Enchiridion;
+import dev.greenhouseteam.enchiridion.EnchiridionTags;
 import dev.greenhouseteam.enchiridion.enchantment.category.EnchantmentCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderGetter;
@@ -23,7 +24,7 @@ public class EnchiridionEnchantmentCategories {
     public static void bootstrap(BootstrapContext<EnchantmentCategory> context) {
         HolderGetter<Enchantment> enchantments = context.lookup(Registries.ENCHANTMENT);
         EnchantmentCategory primary = new EnchantmentCategory(
-                enchantments.getOrThrow(Enchiridion.EnchantmentTags.PRIMARY_CATEGORY),
+                enchantments.getOrThrow(EnchiridionTags.EnchantmentTags.PRIMARY_CATEGORY),
                 Component.translatable("enchiridion.category.enchiridion.primary"),
                 Enchiridion.asResource("enchiridion/category/primary"),
                 Enchiridion.asResource("enchanted_book_primary"),
@@ -32,7 +33,7 @@ public class EnchiridionEnchantmentCategories {
                 30);
         context.register(PRIMARY, primary);
         EnchantmentCategory secondary = new EnchantmentCategory(
-                enchantments.getOrThrow(Enchiridion.EnchantmentTags.SECONDARY_CATEGORY),
+                enchantments.getOrThrow(EnchiridionTags.EnchantmentTags.SECONDARY_CATEGORY),
                 Component.translatable("enchiridion.category.enchiridion.secondary"),
                 Enchiridion.asResource("enchiridion/category/secondary"),
                 Enchiridion.asResource("enchanted_book_secondary"),
@@ -41,7 +42,7 @@ public class EnchiridionEnchantmentCategories {
                 20);
         context.register(SECONDARY, secondary);
         EnchantmentCategory tertiary = new EnchantmentCategory(
-                enchantments.getOrThrow(Enchiridion.EnchantmentTags.TERTIARY_CATEGORY),
+                enchantments.getOrThrow(EnchiridionTags.EnchantmentTags.TERTIARY_CATEGORY),
                 Component.translatable("enchiridion.category.enchiridion.tertiary"),
                 Enchiridion.asResource("enchiridion/category/tertiary"),
                 Enchiridion.asResource("enchanted_book_tertiary"),

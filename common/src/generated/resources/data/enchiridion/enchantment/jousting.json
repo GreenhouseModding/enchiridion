@@ -15,9 +15,8 @@
             "per_level_above_first": 0.5
           },
           "attribute": "minecraft:player.entity_interaction_range",
-          "name": "enchantment.enchiridion.jousting",
-          "operation": "add_value",
-          "uuid": "d85d7660-c3d6-4d43-b5a0-279e79ab8ff0"
+          "id": "enchiridion:enchantment.jousting",
+          "operation": "add_value"
         },
         "enchanted": "this",
         "requirements": {

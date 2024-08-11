@@ -10,13 +10,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class TooltipUtil {
-
 
     public static void modifyEnchantmentTooltips(ItemStack stack, Item.TooltipContext tooltipContext, TooltipFlag flag, List<Component> components) {
         if (tooltipContext.registries() == null)
@@ -25,7 +25,11 @@ public class TooltipUtil {
         ItemEnchantmentCategories categories = stack.getOrDefault(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, ItemEnchantmentCategories.EMPTY);
 
         List<Component> enchantmentComponents = new ArrayList<>();
-        EnchiridionUtil.getEnchantmentsOrStoredEnchantments(stack).addToTooltip(tooltipContext, enchantmentComponents::add, flag);
+        ItemEnchantments enchantments = EnchiridionUtil.getEnchantmentsOrStoredEnchantments(stack);
+        if (enchantments == null)
+            return;
+
+        enchantments.addToTooltip(tooltipContext, enchantmentComponents::add, flag);
 
         components.sort((o1, o2) -> {
             if (!enchantmentComponents.contains(o1) || !enchantmentComponents.contains(o2))

@@ -177,10 +177,13 @@ public class EnchiridionUtil {
         return (category.isBound() && category.value().limit().isEmpty()) || category.isBound() && holders.size() < category.value().limit().get();
     }
 
+    @Nullable
     public static ItemEnchantments getEnchantmentsOrStoredEnchantments(ItemStack stack) {
         ItemEnchantments enchantments = stack.getEnchantments();
         if (enchantments.isEmpty())
-            enchantments = stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+            enchantments = stack.get(DataComponents.STORED_ENCHANTMENTS);
+        if (enchantments == null || enchantments.isEmpty())
+            return null;
         return enchantments;
     }
 

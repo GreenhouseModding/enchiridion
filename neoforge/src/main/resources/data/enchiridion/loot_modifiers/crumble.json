@@ -1,0 +1,20 @@
+{
+  "type": "enchiridion:none",
+  "conditions": [
+    {
+      "condition": "enchiridion:base_stone_table"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "predicates": {
+          "minecraft:enchantments": [
+            {
+              "enchantments": "enchiridion:crumble"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

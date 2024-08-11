@@ -12,9 +12,8 @@
           "per_level_above_first": 0.5
         },
         "attribute": "minecraft:player.block_interaction_range",
-        "name": "enchantment.enchiridion.reach",
-        "operation": "add_value",
-        "uuid": "164c937c-f04c-4730-b8e9-d299a3a187fa"
+        "id": "enchiridion:enchantment.reach",
+        "operation": "add_value"
       }
     ]
   },
