@@ -76,7 +76,7 @@ public class EnchiridionEnchantments {
     public static final ResourceKey<Enchantment> ICE_STRIKE = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("ice_strike"));
     public static final ResourceKey<Enchantment> JOUSTING = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("jousting"));
     public static final ResourceKey<Enchantment> REACH = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("reach"));
-    public static final ResourceKey<Enchantment> RELIABLE = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("reliable"));
+    public static final ResourceKey<Enchantment> RELIABILITY = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("reliability"));
 
     public static final ResourceKey<Enchantment> ASHES_CURSE = ResourceKey.create(Registries.ENCHANTMENT, Enchiridion.asResource("ashes_curse"));
 
@@ -207,7 +207,7 @@ public class EnchiridionEnchantments {
                 Enchantment.definition(miningEnchantable, 1, 2, Enchantment.dynamicCost(12, 7), Enchantment.constantCost(50), 2, EquipmentSlotGroup.MAINHAND)
                 ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(Enchiridion.asResource("enchantment.reach"), Attributes.BLOCK_INTERACTION_RANGE, LevelBasedValue.perLevel(0.5F, 0.5F), AttributeModifier.Operation.ADD_VALUE))
                 .build(REACH.location());
-        Enchantment reliable = Enchantment.enchantment(
+        Enchantment reliability = Enchantment.enchantment(
                         Enchantment.definition(fishingEnchantable, 2, 1, Enchantment.constantCost(5), Enchantment.constantCost(12), 2, EquipmentSlotGroup.MAINHAND)
                 ).withEffect(EnchiridionEnchantmentEffectComponents.RUN_FUNCTIONS_ON_FISHING_LOOT, List.of(
                         new RunFunctionOnLootEffect(List.of(
@@ -218,7 +218,7 @@ public class EnchiridionEnchantments {
                                 new EnchantWithLevelsFunction.Builder(ConstantValue.exactly(35.0F)).fromOptions(enchantments.getOrThrow(EnchantmentTags.ON_RANDOM_LOOT)).build()
                         ), ItemPredicate.Builder.item().of(EnchiridionTags.ItemTags.INCLUSIVE_ENCHANTABLES).build(), BuiltInLootTables.FISHING_TREASURE)
                 ))
-                .build(RELIABLE.location());
+                .build(RELIABILITY.location());
 
         context.register(ASHES_CURSE, ashesCurse);
         context.register(BARDING, barding);
@@ -229,6 +229,6 @@ public class EnchiridionEnchantments {
         context.register(ICE_STRIKE, iceStrike);
         context.register(JOUSTING, jousting);
         context.register(REACH, reach);
-        context.register(RELIABLE, reliable);
+        context.register(RELIABILITY, reliability);
     }
 }

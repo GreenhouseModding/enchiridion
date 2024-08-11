@@ -8,7 +8,7 @@
   "enchantment.enchiridion.ice_strike": "Ice Strike",
   "enchantment.enchiridion.jousting": "Jousting",
   "enchantment.enchiridion.reach": "Reach",
-  "enchantment.enchiridion.reliable": "Reliable",
+  "enchantment.enchiridion.reliability": "Reliability",
 
   "enchiridion.category.enchiridion.primary": "Primary",
   "enchiridion.category.enchiridion.secondary": "Secondary",
@@ -24,7 +24,7 @@
   "enchantment.enchiridion.ice_strike.desc": "Causes additional freezing damage and slower movements when used to attack a mob.",
   "enchantment.enchiridion.jousting.desc": "Increases entity interaction range of the weapon whilst riding a mob.",
   "enchantment.enchiridion.reach.desc": "Increases block interaction range of the tool.",
-  "enchantment.enchiridion.reliable.desc": "Increases the enchantment quality and durability of fished up items.",
+  "enchantment.enchiridion.reliability.desc": "Increases the enchantment quality and durability of fished up items.",
 
   "tag.enchantment.enchiridion.category.uncategorised": "Uncategorised",
   "tag.enchantment.enchiridion.category.primary": "Primary",

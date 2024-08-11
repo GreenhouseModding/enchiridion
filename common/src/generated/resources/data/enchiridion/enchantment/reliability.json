@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.enchiridion.reliable"
+    "translate": "enchantment.enchiridion.reliability"
   },
   "effects": {
     "enchiridion:run_functions_on_fishing_loot": [

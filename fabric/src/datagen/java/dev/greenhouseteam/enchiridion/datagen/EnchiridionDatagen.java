@@ -97,7 +97,7 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                             EnchiridionEnchantments.EXPERIENCED,
                             EnchiridionEnchantments.ICE_STRIKE,
                             EnchiridionEnchantments.REACH,
-                            EnchiridionEnchantments.RELIABLE
+                            EnchiridionEnchantments.RELIABILITY
                     );
             getOrCreateTagBuilder(EnchantmentTags.TREASURE)
                     .add(
@@ -155,7 +155,7 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
                             EnchiridionEnchantments.EXPERIENCED,
                             EnchiridionEnchantments.ICE_STRIKE,
                             EnchiridionEnchantments.REACH,
-                            EnchiridionEnchantments.RELIABLE
+                            EnchiridionEnchantments.RELIABILITY
                     );
             getOrCreateTagBuilder(EnchiridionTags.EnchantmentTags.TERTIARY_CATEGORY)
                     .add(
