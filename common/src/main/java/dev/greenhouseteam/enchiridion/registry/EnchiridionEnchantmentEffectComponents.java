@@ -64,7 +64,6 @@ public class EnchiridionEnchantmentEffectComponents {
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("post_entity_drop"), POST_ENTITY_DROP);
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("post_shield_disable"), POST_SHIELD_DISABLE);
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("prevent_hunger_consumption"), PREVENT_HUNGER_CONSUMPTION);
-        callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("run_functions_on_block_loot"), RUN_FUNCTIONS_ON_FISHING_LOOT);
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("run_functions_on_fishing_loot"), RUN_FUNCTIONS_ON_FISHING_LOOT);
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("target_block_changed"), TARGET_BLOCK_CHANGED);
         callback.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Enchiridion.asResource("vehicle_changed"), VEHICLE_CHANGED);
