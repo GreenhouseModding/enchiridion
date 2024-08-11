@@ -10,9 +10,8 @@
           "type": "minecraft:attribute",
           "amount": 8.0,
           "attribute": "minecraft:player.mining_efficiency",
-          "name": "enchantment.enchiridion.crumble",
-          "operation": "add_value",
-          "uuid": "031e1965-9647-4271-8bf2-7aecdd20ab09"
+          "id": "enchiridion:enchantment.crumble",
+          "operation": "add_value"
         },
         "requirements": {
           "condition": "minecraft:all_of",
@@ -45,9 +44,8 @@
           "type": "minecraft:attribute",
           "amount": 16.0,
           "attribute": "minecraft:player.mining_efficiency",
-          "name": "enchantment.enchiridion.crumble",
-          "operation": "add_value",
-          "uuid": "031e1965-9647-4271-8bf2-7aecdd20ab09"
+          "id": "enchiridion:enchantment.crumble",
+          "operation": "add_value"
         },
         "requirements": {
           "condition": "minecraft:all_of",
@@ -79,9 +77,8 @@
           "type": "minecraft:attribute",
           "amount": 32.0,
           "attribute": "minecraft:player.mining_efficiency",
-          "name": "enchantment.enchiridion.crumble",
-          "operation": "add_value",
-          "uuid": "031e1965-9647-4271-8bf2-7aecdd20ab09"
+          "id": "enchiridion:enchantment.crumble",
+          "operation": "add_value"
         },
         "requirements": {
           "condition": "minecraft:all_of",
@@ -115,9 +112,8 @@
           "type": "minecraft:attribute",
           "amount": 0.4,
           "attribute": "minecraft:player.mining_efficiency",
-          "name": "enchantment.enchiridion.crumble.harder_stone",
-          "operation": "add_multiplied_total",
-          "uuid": "e2fd9d91-1220-438d-ad67-cc11f499129f"
+          "id": "enchiridion:enchantment.crumble.harder_stone",
+          "operation": "add_multiplied_total"
         },
         "requirements": {
           "condition": "minecraft:location_check",

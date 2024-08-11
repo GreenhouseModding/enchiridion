@@ -28,7 +28,7 @@
               "predicate": {
                 "distance": {
                   "absolute": {
-                    "max": 2.0
+                    "max": 2.5
                   }
                 }
               }

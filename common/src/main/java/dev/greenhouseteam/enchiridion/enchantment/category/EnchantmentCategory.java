@@ -45,18 +45,18 @@ public record EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, C
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                ResourceLocation iconLocation, Optional<ResourceLocation> enchantedBookModelLocation,
                                TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation, enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "enchiridion/" + string)), color, limit, priority);
+        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation, enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
     }
 
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                Optional<ResourceLocation> iconLocation, ResourceLocation enchantedBookModelLocation,
                                TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "enchiridion/" + string)), color, limit, priority);
+        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
     }
 
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                Optional<ResourceLocation> iconLocation, Optional<ResourceLocation> enchantedBookModelLocation,
                                TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation,  enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "enchiridion/" + string)), color, limit, priority);
+        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation,  enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
     }
 }

@@ -15,12 +15,16 @@
     "EnchantmentHelperMixin",
     "EnchantmentMenuMixin",
     "EntityMixin",
+    "FishingHookMixin",
     "ItemEnchantmentsAccessor",
     "LivingEntityMixin",
+    "LootParamsAccessor",
     "MinecraftServerMixin",
     "PlayerMixin",
     "ProjectileWeaponItemMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "TagEntryAccessor",
+    "TagLoaderMixin"
   ],
   "client": [
     "client.AbstractContainerScreenAccessor",
@@ -28,8 +32,7 @@
     "client.ContainerEventHandlerMixin",
     "client.EnchantmentScreenMixin",
     "client.ItemRendererMixin",
-    "client.LivingEntityMixin",
-    "client.ModelManagerAccessor"
+    "client.LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

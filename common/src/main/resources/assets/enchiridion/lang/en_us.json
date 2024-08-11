@@ -2,21 +2,36 @@
   "enchantment.enchiridion.ashes_curse": "Curse of Ashes",
   "enchantment.enchiridion.barding": "Barding",
   "enchantment.enchiridion.crumble": "Crumble",
+  "enchantment.enchiridion.dredge": "Dredge",
   "enchantment.enchiridion.exhilarating": "Exhilarating",
+  "enchantment.enchiridion.experienced": "Experienced",
   "enchantment.enchiridion.ice_strike": "Ice Strike",
   "enchantment.enchiridion.jousting": "Jousting",
   "enchantment.enchiridion.reach": "Reach",
+  "enchantment.enchiridion.reliability": "Reliability",
 
   "enchiridion.category.enchiridion.primary": "Primary",
   "enchiridion.category.enchiridion.secondary": "Secondary",
   "enchiridion.category.enchiridion.tertiary": "Tertiary",
   "enchiridion.category.enchiridion.curse": "Curse",
 
+  "enchantment.enchiridion.ashes_curse.desc": "Sets drops from this item on fire.",
+  "enchantment.enchiridion.barding.desc": "Reduces damage towards the mob you are riding.",
+  "enchantment.enchiridion.crumble.desc": "Some blocks such as stone and deepslate are mined faster and do not drop items.",
+  "enchantment.enchiridion.dredge.desc": "Adds a chance to fish up extra items while fishing.",
+  "enchantment.enchiridion.exhilarating.desc": "Prevents the user from using up hunger from mining blocks.",
+  "enchantment.enchiridion.experienced.desc": "Fishing with this fishing rod grants more experience.",
+  "enchantment.enchiridion.ice_strike.desc": "Causes additional freezing damage and slower movements when used to attack a mob.",
+  "enchantment.enchiridion.jousting.desc": "Increases entity interaction range of the weapon whilst riding a mob.",
+  "enchantment.enchiridion.reach.desc": "Increases block interaction range of the tool.",
+  "enchantment.enchiridion.reliability.desc": "Increases the enchantment quality and durability of fished up items.",
+
   "tag.enchantment.enchiridion.category.uncategorised": "Uncategorised",
   "tag.enchantment.enchiridion.category.primary": "Primary",
   "tag.enchantment.enchiridion.category.secondary": "Secondary",
   "tag.enchantment.enchiridion.category.tertiary": "Tertiary",
   "tag.enchantment.enchiridion.exclusive_set.elemental": "Elemental Exclusive Set",
+  "tag.enchantment.enchiridion.exclusive_set.fishing": "Fishing Exclusive Set",
   "tag.entity_type.enchiridion.ignores_barding": "Ignores Barding",
   "tag.entity_type.enchiridion.prevents_jousting": "Prevents Jousting",
   "tag.fluid.enchiridion.activates_impaling": "Activates Impaling",
@@ -25,6 +40,7 @@
   "tag.item.enchiridion.enchantable.ice_strike": "Ice Strike Enchantable",
   "tag.item.enchiridion.enchantable.ice_strike_primary": "Ice Strike Primary Enchantable",
   "tag.item.enchiridion.enchantable.pickaxe": "Pickaxe Enchantable",
+  "tag.item.enchiridion.inclusive_enchantables": "Inclusive Enchantables",
 
   "container.enchiridion.enchant.level_up": "Level Up: %s \u2192 %s . . . ?",
   "container.enchiridion.enchant.bookshelf.requirement": "Bookshelf Requirement: %s",
@@ -36,5 +52,9 @@
   "resourcePack.enchiridion.default_enchanted_books.name": "Default Enchanted Books",
   "resourcePack.enchiridion.default_enchanted_books.description": "Reverts the modified Enchanted Book textures.",
   "dataPack.enchiridion.vanilla_enchantment_modifications.name": "Enchiridion Vanilla Enchantment Modifications",
-  "dataPack.enchiridion.vanilla_enchantment_modifications.description": "Modifies vanilla enchantments to fit within Enchiridion."
+  "dataPack.enchiridion.vanilla_enchantment_modifications.description": "Modifies vanilla enchantments to fit within Enchiridion.",
+  "resourcePack.enchiridion.enchantment_descriptions_compat.name": "Enchiridion Enchantment Descriptions Compatibility",
+  "resourcePack.enchiridion.enchantment_descriptions_compat.description": "Modifies any enchantment descriptions to match Enchiridion's modifications.",
+
+  "pack.enchiridion.builtin": "%s (built-in: Enchiridion)"
 }

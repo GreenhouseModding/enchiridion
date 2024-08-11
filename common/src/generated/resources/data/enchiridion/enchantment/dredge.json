@@ -1,0 +1,39 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchiridion.dredge"
+  },
+  "effects": {
+    "enchiridion:additional_fishing_loot": [
+      {
+        "effect": "minecraft:gameplay/fishing",
+        "requirements": {
+          "chance": {
+            "type": "minecraft:enchantment_level",
+            "amount": {
+              "type": "minecraft:linear",
+              "base": 0.2,
+              "per_level_above_first": 0.2
+            }
+          },
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#enchiridion:exclusive_set/fishing",
+  "max_cost": {
+    "base": 65,
+    "per_level_above_first": 9
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 9
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/fishing",
+  "weight": 2
+}

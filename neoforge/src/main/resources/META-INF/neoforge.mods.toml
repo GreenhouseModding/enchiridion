@@ -1,27 +1,30 @@
 modLoader = "javafml"
 loaderVersion = "${neoforge_loader_version_range}"
-license = "${license}"
-issueTrackerURL="${issues}"
+issueTrackerURL = "https://github.com/${sources}/issues"
+license = "${mod_license}"
+
 [[mods]]
 modId = "${mod_id}"
-version = "${version}"
+version = "${mod_version}+${minecraft_version}"
 displayName = "${mod_name}"
-#updateJSONURL="https://change.me.example.invalid/updates.json"
 displayURL="${homepage}"
 logoFile="${mod_id}.png"
-credits="${mod_contributors}"
+credits="${neoforge_mod_contributors}"
 authors = "${mod_author}"
 description = '''${mod_description}'''
+
 [[mixins]]
 config = "${mod_id}.mixins.json"
 [[mixins]]
 config = "${mod_id}.neoforge.mixins.json"
+
 [[dependencies.${mod_id}]]
 modId = "neoforge"
 type="required"
 versionRange = "${neoforge_loader_version_range}"
 ordering = "NONE"
 side = "BOTH"
+
 [[dependencies.${mod_id}]]
 modId = "minecraft"
 type="required"
