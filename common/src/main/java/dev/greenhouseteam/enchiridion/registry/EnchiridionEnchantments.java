@@ -176,7 +176,7 @@ public class EnchiridionEnchantments {
         Enchantment dredge = Enchantment.enchantment(
                         Enchantment.definition(fishingEnchantable, 2, 3, Enchantment.dynamicCost(15, 9), Enchantment.dynamicCost(65, 9), 4, EquipmentSlotGroup.MAINHAND)
                 ).exclusiveWith(fishingExclusiveSet)
-                .withEffect(EnchiridionEnchantmentEffectComponents.ADDITIONAL_FISHING_LOOT, BuiltInLootTables.FISHING, LootItemRandomChanceCondition.randomChance(EnchantmentLevelProvider.forEnchantmentLevel(LevelBasedValue.perLevel(0.125F))))
+                .withEffect(EnchiridionEnchantmentEffectComponents.ADDITIONAL_FISHING_LOOT, BuiltInLootTables.FISHING, LootItemRandomChanceCondition.randomChance(EnchantmentLevelProvider.forEnchantmentLevel(LevelBasedValue.perLevel(0.2F))))
                 .build(DREDGE.location());
         Enchantment exhilarating = Enchantment.enchantment(
                 Enchantment.definition(miningEnchantable, 1, 1, Enchantment.dynamicCost(12, 4), Enchantment.constantCost(35), 1, EquipmentSlotGroup.MAINHAND)
