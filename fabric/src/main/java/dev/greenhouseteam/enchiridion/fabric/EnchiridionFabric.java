@@ -16,6 +16,7 @@ import dev.greenhouseteam.enchiridion.registry.EnchiridionEnchantmentEffectCompo
 import dev.greenhouseteam.enchiridion.registry.EnchiridionEnchantments;
 import dev.greenhouseteam.enchiridion.registry.EnchiridionEntityEnchantmentEffects;
 import dev.greenhouseteam.enchiridion.registry.EnchiridionRegistries;
+import dev.greenhouseteam.enchiridion.util.AnvilUtil;
 import dev.greenhouseteam.enchiridion.util.ClientRegistryAccessReference;
 import dev.greenhouseteam.enchiridion.util.CreativeTabUtil;
 import dev.greenhouseteam.enchiridion.util.EnchiridionUtil;
@@ -122,7 +123,7 @@ public class EnchiridionFabric implements ModInitializer {
             ItemEnchantmentCategories categories = target.getOrDefault(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, ItemEnchantmentCategories.EMPTY);
             Holder<EnchantmentCategory> category = EnchiridionUtil.getFirstEnchantmentCategory(getRegistryAccess(), enchantment);
 
-            if (category != null && !EnchiridionUtil.categoryAcceptsNewEnchantmentsWithValue(category, categories, enchantment))
+            if (category != null && !AnvilUtil.getAnvilContext() && !EnchiridionUtil.categoryAcceptsNewEnchantmentsWithValue(category, categories, enchantment))
                 return TriState.FALSE;
 
             return TriState.DEFAULT;
