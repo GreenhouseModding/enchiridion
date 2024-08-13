@@ -52,14 +52,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         super(menuType, syncId, inventory, access);
     }
 
-    @WrapWithCondition(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/DataSlot;set(I)V", ordinal = 4))
-    private boolean enchiridion$cancelCost(DataSlot instance, int i) {
-        return false;
-    }
-
-    @WrapWithCondition(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;set(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;", ordinal = 1))
-    private <T> boolean enchiridion$cancelCostFromItem(ItemStack instance, DataComponentType<? super T> component, T value) {
-        return false;
+    @ModifyExpressionValue(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal =  2))
+    private boolean enchiridion$cancelBonusCostFromItem(boolean original) {
+        return true;
     }
 
     @ModifyExpressionValue(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;areCompatible(Lnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)Z"))
@@ -110,10 +105,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         return original;
     }
 
-    @Unique
-    @Nullable
-    private Integer enchiridion$splitDurability = 0;
-
     @ModifyArg(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/ResultContainer;setItem(ILnet/minecraft/world/item/ItemStack;)V", ordinal = 4), index = 1)
     private ItemStack enchiridion$setAnvilItem(ItemStack original) {
         if (repairItemCountCost > 0 || original.isEmpty())
@@ -122,7 +113,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         ItemStack input = this.inputSlots.getItem(0);
         ItemStack otherInput = this.inputSlots.getItem(1);
 
-        if (EnchantmentHelper.getEnchantmentsForCrafting(input).isEmpty() && EnchantmentHelper.getEnchantmentsForCrafting(otherInput).isEmpty())
+        if (EnchantmentHelper.getEnchantmentsForCrafting(input).isEmpty() || EnchantmentHelper.getEnchantmentsForCrafting(otherInput).isEmpty())
             return original;
 
         original.remove(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original));
@@ -188,17 +179,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
             EnchantmentHelper.setEnchantments(original, itemEnchantments.toImmutable());
 
 
-            if (original.isDamageableItem() && !input.getEnchantments().isEmpty() && !otherInput.getEnchantments().isEmpty()) {
-                int inputDamage = input.getDamageValue();
-                int otherDamage = otherInput.getDamageValue();
-                int damageValue = (inputDamage + otherDamage) / 2;
-
-                if (damageValue < 0)
-                    damageValue = 0;
-
-                original.setDamageValue(damageValue);
-                enchiridion$splitDurability = damageValue;
-            }
+            if (original.isDamageableItem() && !input.getEnchantments().isEmpty() && !otherInput.getEnchantments().isEmpty())
+                original.setDamageValue(input.getDamageValue());
         }
 
         return original;
@@ -241,7 +223,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
             if (!itemEnchantments.keySet().isEmpty() || !newCategories.isEmpty()) {
                 otherInput.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(otherInput), itemEnchantments.toImmutable());
                 otherInput.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, newCategories);
-                otherInput.set(DataComponents.DAMAGE, enchiridion$splitDurability);
+                otherInput.set(DataComponents.DAMAGE, otherInput.getDamageValue());
                 return otherInput;
             }
         }
