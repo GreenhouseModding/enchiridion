@@ -1,8 +1,11 @@
 package dev.greenhouseteam.enchiridion.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.greenhouseteam.enchiridion.Enchiridion;
 import dev.greenhouseteam.enchiridion.access.MergeableAnvilAccess;
+import dev.greenhouseteam.enchiridion.util.AnvilUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -41,5 +44,12 @@ public abstract class ItemCombinerMenuMixin extends AbstractContainerMenu {
             access.execute((level, pos) -> clearContainer(player, this.resultSlots));
             access.execute((level, pos) -> clearContainer(player, hasItemsAccess.enchiridion$getMergeContainer()));
         }
+    }
+
+    @ModifyExpressionValue(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/ItemCombinerMenu;getResultSlot()I"))
+    private int enchiridion$allowQuickMovingOfMergeStack(int original, Player player, int index) {
+        if (this instanceof MergeableAnvilAccess && index == AnvilUtil.getAnvilMergeSlotIndex())
+            return index;
+        return original;
     }
 }
