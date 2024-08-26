@@ -193,7 +193,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
-            if (category.is(EnchiridionEnchantmentCategories.CURSE)) {
+            if (category != null && category.is(EnchiridionEnchantmentCategories.CURSE)) {
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
@@ -211,7 +211,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
-            if (category.is(EnchiridionEnchantmentCategories.CURSE)) {
+            if (category != null && category.is(EnchiridionEnchantmentCategories.CURSE)) {
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
