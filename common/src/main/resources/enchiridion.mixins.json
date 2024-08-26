@@ -16,6 +16,8 @@
     "EnchantmentMenuMixin",
     "EntityMixin",
     "FishingHookMixin",
+    "ItemCombinerMenuMixin",
+    "ItemCombinerMenuResultSlotMixin",
     "ItemEnchantmentsAccessor",
     "LivingEntityMixin",
     "LootParamsAccessor",
@@ -31,6 +33,7 @@
     "client.AbstractContainerScreenMixin",
     "client.ContainerEventHandlerMixin",
     "client.EnchantmentScreenMixin",
+    "client.ItemCombinerScreenMixin",
     "client.ItemRendererMixin",
     "client.LivingEntityMixin"
   ],
