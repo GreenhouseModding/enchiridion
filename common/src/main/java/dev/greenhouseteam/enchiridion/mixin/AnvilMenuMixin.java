@@ -195,7 +195,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
-            if (category != null && category.is(EnchiridionEnchantmentCategories.CURSE)) {
+            if (category != null && category.isBound() && category.value().spreadsWhenSwapping()) {
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
@@ -214,7 +214,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
-            if (category != null && category.is(EnchiridionEnchantmentCategories.CURSE)) {
+            if (category != null && category.isBound() && category.value().spreadsWhenSwapping()) {
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
@@ -243,7 +243,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
 
         ItemEnchantments immutableEnchantments = itemEnchantments.toImmutable();
 
-        if (immutableEnchantments.equals(inputEnchantments) || immutableEnchantments.equals(otherEnchantments)) {
+        if ((immutableEnchantments.equals(inputEnchantments) || immutableEnchantments.equals(otherEnchantments)) && mergeSlotEnchantments.isEmpty()) {
             this.cost.set(0);
             return ItemStack.EMPTY;
         }
