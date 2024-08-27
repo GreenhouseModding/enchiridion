@@ -243,10 +243,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
 
         ItemEnchantments immutableEnchantments = itemEnchantments.toImmutable();
 
-        if ((immutableEnchantments.equals(inputEnchantments) || immutableEnchantments.equals(otherEnchantments)) && mergeSlotEnchantments.isEmpty()) {
-            this.cost.set(0);
-            return ItemStack.EMPTY;
-        }
 
         if (!immutableEnchantments.keySet().isEmpty()) {
             if (!inputCategories.isEmpty() && inputCategories.getCategories().keySet().equals(otherCategories.getCategories().keySet()) && newCategories.getCategories().entrySet().stream().allMatch(entry -> inputCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == inputCategories.get(entry.getKey()).size() || !otherCategories.isEmpty() && otherCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == otherCategories.get(entry.getKey()).size()))
@@ -254,6 +250,11 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             original.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original), immutableEnchantments);
             original.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, newCategories);
             EnchantmentHelper.setEnchantments(original, immutableEnchantments);
+        }
+
+        if (ItemStack.isSameItemSameComponents(input, original) || ItemStack.isSameItemSameComponents(otherInput, original)) {
+            this.cost.set(0);
+            return ItemStack.EMPTY;
         }
 
         if (!mergeSlotEnchantments.isEmpty()) {
@@ -282,6 +283,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 ItemStack otherCopy = otherInput.copy();
                 otherCopy.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(otherCopy), mergeEnchantments.toImmutable());
                 otherCopy.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, mergeCategories);
+
+
+                if ((ItemStack.isSameItemSameComponents(input, otherCopy) || ItemStack.isSameItemSameComponents(otherInput, otherCopy))) {
+                    this.cost.set(0);
+                    return ItemStack.EMPTY;
+                }
+
                 enchiridion$mergeSlots.setItem(0, otherCopy);
                 enchiridion$merged = true;
             }
