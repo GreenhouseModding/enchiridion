@@ -38,8 +38,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Allow cycling through same category enchantments from books.
 // TODO: Figure out how to handle durability when swapping.
@@ -109,9 +109,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
         return true;
     }
 
-    @Unique
-    private final Set<Object2IntMap.Entry<Holder<Enchantment>>> enchiridion$otherEnchantments = new HashSet<>();
-
     @Inject(method = "createResult", at = @At("HEAD"))
     private void enchiridion$setAnvilContext(CallbackInfo ci) {
         AnvilUtil.setAnvilContext(true);
@@ -176,10 +173,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
         if (EnchantmentHelper.getEnchantmentsForCrafting(otherInput).isEmpty())
             return original;
 
+        ItemEnchantments inputEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(input);
+        ItemEnchantments otherEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(otherInput);
+
         ItemEnchantmentCategories inputCategories = input.getOrDefault(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, ItemEnchantmentCategories.EMPTY);
         ItemEnchantmentCategories otherCategories = otherInput.getOrDefault(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, ItemEnchantmentCategories.EMPTY);
 
-        if (EnchantmentHelper.getEnchantmentsForCrafting(input).equals(EnchantmentHelper.getEnchantmentsForCrafting(otherInput)) && inputCategories.equals(otherCategories))
+        if (inputEnchantments.equals(otherEnchantments) && inputCategories.equals(otherCategories))
             return original;
 
         original.remove(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original));
@@ -188,8 +188,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
         ItemEnchantmentCategories newCategories = new ItemEnchantmentCategories();
         ItemEnchantments.Mutable itemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
-        enchiridion$otherEnchantments.clear();
-        for (Object2IntMap.Entry<Holder<Enchantment>> entry : EnchantmentHelper.getEnchantmentsForCrafting(otherInput).entrySet()) {
+        List<Object2IntMap.Entry<Holder<Enchantment>>> mergeSlotEnchantments = new ArrayList<>();
+        List<Object2IntMap.Entry<Holder<Enchantment>>> mergeSlotSpreadEnchantments = new ArrayList<>();
+
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : otherEnchantments.entrySet()) {
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
@@ -197,7 +199,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
-                    enchiridion$otherEnchantments.add(entry);
+                    if (!inputEnchantments.keySet().contains(entry.getKey()))
+                        mergeSlotSpreadEnchantments.add(entry);
                 }
             } else if (EnchiridionUtil.getAllEnchantmentCategories(player.level().registryAccess(), entry.getKey()).isEmpty() && (itemEnchantments.keySet().contains(entry.getKey()) && entry.getIntValue() > itemEnchantments.getLevel(entry.getKey()) || EnchantmentHelper.isEnchantmentCompatible(itemEnchantments.keySet(), entry.getKey()) && (player.getAbilities().instabuild || EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original) == DataComponents.STORED_ENCHANTMENTS || Enchiridion.getHelper().supportsEnchantment(original, entry.getKey()))))
                 itemEnchantments.set(entry.getKey(), entry.getIntValue());
@@ -205,9 +208,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 newCategories.addCategoryWithEnchantment(category, entry.getKey());
                 itemEnchantments.set(entry.getKey(), entry.getIntValue());
             } else if (EnchantmentHelper.getEnchantmentsForCrafting(otherInput).entrySet().stream().noneMatch(entry1 -> entry1.getKey() == entry.getKey() && entry1.getIntValue() < entry.getIntValue()) && (player.getAbilities().instabuild || EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original) == DataComponents.STORED_ENCHANTMENTS || Enchiridion.getHelper().supportsEnchantment(original, entry.getKey())))
-                enchiridion$otherEnchantments.add(entry);
+                mergeSlotEnchantments.add(entry);
         }
-        for (Object2IntMap.Entry<Holder<Enchantment>> entry : EnchantmentHelper.getEnchantmentsForCrafting(input).entrySet()) {
+        for (Object2IntMap.Entry<Holder<Enchantment>> entry : inputEnchantments.entrySet()) {
             Holder<EnchantmentCategory> category = otherCategories.findFirstCategory(entry.getKey());
             if (category == null || !category.isBound())
                 category = inputCategories.findFirstCategory(entry.getKey());
@@ -215,7 +218,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 if (!itemEnchantments.keySet().contains(entry.getKey()) || entry.getIntValue() > itemEnchantments.getLevel(entry.getKey())) {
                     newCategories.addCategoryWithEnchantment(category, entry.getKey());
                     itemEnchantments.set(entry.getKey(), entry.getIntValue());
-                    enchiridion$otherEnchantments.add(entry);
+                    mergeSlotSpreadEnchantments.add(entry);
                 }
             } else if (EnchiridionUtil.getAllEnchantmentCategories(player.level().registryAccess(), entry.getKey()).isEmpty() && (itemEnchantments.keySet().contains(entry.getKey()) && entry.getIntValue() > itemEnchantments.getLevel(entry.getKey()) || EnchantmentHelper.isEnchantmentCompatible(itemEnchantments.keySet(), entry.getKey()) && (player.getAbilities().instabuild || EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original) == DataComponents.STORED_ENCHANTMENTS || Enchiridion.getHelper().supportsEnchantment(original, entry.getKey()))))
                 itemEnchantments.set(entry.getKey(), entry.getIntValue());
@@ -223,7 +226,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 newCategories.addCategoryWithEnchantment(category, entry.getKey());
                 itemEnchantments.set(entry.getKey(), entry.getIntValue());
             } else if (EnchantmentHelper.getEnchantmentsForCrafting(input).entrySet().stream().noneMatch(entry1 -> entry1.getKey() == entry.getKey() && entry1.getIntValue() > entry.getIntValue()) && (player.getAbilities().instabuild || EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original) == DataComponents.STORED_ENCHANTMENTS || Enchiridion.getHelper().supportsEnchantment(original, entry.getKey())))
-                enchiridion$otherEnchantments.add(entry);
+                mergeSlotEnchantments.add(entry);
         }
 
         for (Object2IntMap.Entry<Holder<Enchantment>> entry : EnchantmentHelper.getEnchantmentsForCrafting(original).entrySet().stream().filter(entry -> !EnchantmentHelper.getEnchantmentsForCrafting(input).keySet().contains(entry.getKey()) && !EnchantmentHelper.getEnchantmentsForCrafting(otherInput).keySet().contains(entry.getKey())).toList()) {
@@ -238,42 +241,26 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             }
         }
 
-        if (itemEnchantments.toImmutable().equals(EnchantmentHelper.getEnchantmentsForCrafting(input))) {
+        ItemEnchantments immutableEnchantments = itemEnchantments.toImmutable();
+
+        if (immutableEnchantments.equals(inputEnchantments) || immutableEnchantments.equals(otherEnchantments)) {
             this.cost.set(0);
             return ItemStack.EMPTY;
         }
 
-        if (!itemEnchantments.keySet().isEmpty()) {
+        if (!immutableEnchantments.keySet().isEmpty()) {
             if (!inputCategories.isEmpty() && inputCategories.getCategories().keySet().equals(otherCategories.getCategories().keySet()) && newCategories.getCategories().entrySet().stream().allMatch(entry -> inputCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == inputCategories.get(entry.getKey()).size() || !otherCategories.isEmpty() && otherCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == otherCategories.get(entry.getKey()).size()))
                 this.cost.set(1);
-            original.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original), itemEnchantments.toImmutable());
+            original.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(original), immutableEnchantments);
             original.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, newCategories);
-            EnchantmentHelper.setEnchantments(original, itemEnchantments.toImmutable());
-
-            if (original.isDamageableItem() && !input.getEnchantments().isEmpty() && !otherInput.getEnchantments().isEmpty()) {
-                original.setDamageValue(input.getDamageValue());
-                if (!otherInput.has(DataComponents.STORED_ENCHANTMENTS)) {
-                    int l = input.getMaxDamage() - input.getDamageValue();
-                    int i1 = otherInput.getMaxDamage() - otherInput.getDamageValue();
-                    int j1 = i1 + input.getMaxDamage() * 12 / 100;
-                    int k1 = l + j1;
-                    int l1 = input.getMaxDamage() - k1;
-                    if (l1 < 0) {
-                        l1 = 0;
-                    }
-
-                    if (l1 < input.getDamageValue()) {
-                        cost.set(cost.get() - 2);
-                    }
-                }
-            }
+            EnchantmentHelper.setEnchantments(original, immutableEnchantments);
         }
 
-        if (!enchiridion$otherEnchantments.isEmpty()) {
+        if (!mergeSlotEnchantments.isEmpty()) {
             ItemEnchantmentCategories mergeCategories = new ItemEnchantmentCategories();
             ItemEnchantments.Mutable mergeEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
-            for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchiridion$otherEnchantments) {
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : mergeSlotEnchantments) {
                 Holder<EnchantmentCategory> category = inputCategories.findFirstCategory(entry.getKey());
                 if (category == null || !category.isBound())
                     category = otherCategories.findFirstCategory(entry.getKey());
@@ -282,9 +269,16 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                     mergeCategories.addCategoryWithEnchantment(category, entry.getKey());
             }
 
-            enchiridion$otherEnchantments.clear();
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : mergeSlotSpreadEnchantments) {
+                Holder<EnchantmentCategory> category = inputCategories.findFirstCategory(entry.getKey());
+                if (category == null || !category.isBound())
+                    category = otherCategories.findFirstCategory(entry.getKey());
+                mergeEnchantments.set(entry.getKey(), entry.getIntValue());
+                if (category != null)
+                    mergeCategories.addCategoryWithEnchantment(category, entry.getKey());
+            }
 
-            if (!itemEnchantments.keySet().isEmpty() || !newCategories.isEmpty()) {
+            if (!mergeEnchantments.keySet().isEmpty() || !mergeCategories.isEmpty()) {
                 ItemStack otherCopy = otherInput.copy();
                 otherCopy.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(otherCopy), mergeEnchantments.toImmutable());
                 otherCopy.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, mergeCategories);
