@@ -8,7 +8,6 @@ import dev.greenhouseteam.enchiridion.access.MergeableAnvilAccess;
 import dev.greenhouseteam.enchiridion.enchantment.category.EnchantmentCategory;
 import dev.greenhouseteam.enchiridion.enchantment.category.ItemEnchantmentCategories;
 import dev.greenhouseteam.enchiridion.registry.EnchiridionDataComponents;
-import dev.greenhouseteam.enchiridion.registry.EnchiridionEnchantmentCategories;
 import dev.greenhouseteam.enchiridion.util.AnvilUtil;
 import dev.greenhouseteam.enchiridion.util.EnchiridionUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -42,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Allow cycling through same category enchantments from books.
-// TODO: Figure out how to handle durability when swapping.
 // TODO: Config to disable all this.
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu implements MergeableAnvilAccess {
@@ -252,12 +250,12 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             EnchantmentHelper.setEnchantments(original, immutableEnchantments);
         }
 
-        if (ItemStack.isSameItemSameComponents(input, original) || ItemStack.isSameItemSameComponents(otherInput, original)) {
+        if (ItemStack.isSameItemSameComponents(input, original)) {
             this.cost.set(0);
             return ItemStack.EMPTY;
         }
 
-        if (!mergeSlotEnchantments.isEmpty()) {
+        if (!mergeSlotEnchantments.isEmpty() && otherInput.has(DataComponents.STORED_ENCHANTMENTS)) {
             ItemEnchantmentCategories mergeCategories = new ItemEnchantmentCategories();
             ItemEnchantments.Mutable mergeEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
@@ -284,9 +282,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
                 otherCopy.set(EnchantmentHelperAccessor.enchiridion$invokeGetComponentType(otherCopy), mergeEnchantments.toImmutable());
                 otherCopy.set(EnchiridionDataComponents.ENCHANTMENT_CATEGORIES, mergeCategories);
 
-
-                if ((ItemStack.isSameItemSameComponents(input, otherCopy) || ItemStack.isSameItemSameComponents(otherInput, otherCopy))) {
-                    this.cost.set(0);
+                if (ItemStack.isSameItemSameComponents(otherInput, otherCopy)) {
+                    cost.set(0);
                     return ItemStack.EMPTY;
                 }
 
