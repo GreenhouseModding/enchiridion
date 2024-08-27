@@ -193,7 +193,7 @@ public abstract class EnchantmentMenuMixin  extends AbstractContainerMenu implem
 
     @ModifyVariable(method = "getEnchantmentList", at = @At("HEAD"), ordinal = 1, argsOnly = true)
     private int enchiridion$setEnchantmentLevelToFull(int original) {
-        return Math.max(1, Mth.floor((float) original / 0.5F));
+        return Math.max(1, Math.round((float) original / 0.67F));
     }
 
     @ModifyVariable(method = "clickMenuButton", at = @At(value = "LOAD"), ordinal = 1)

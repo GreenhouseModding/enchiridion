@@ -32,12 +32,12 @@ import java.util.function.Consumer;
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
     @Shadow
-    protected static void runIterationOnEquipment(LivingEntity $$0, EnchantmentHelper.EnchantmentInSlotVisitor $$1) {
+    private static void runIterationOnEquipment(LivingEntity $$0, EnchantmentHelper.EnchantmentInSlotVisitor $$1) {
     }
 
     @ModifyReturnValue(method = "getEnchantmentCost", at = @At("RETURN"))
     private static int enchiridion$modifyEnchantmentCost(int original) {
-        return Math.max(1, Mth.floor((float) original * 0.5F));
+        return Math.max(1, Math.round((float) original * 0.67F));
     }
 
     @ModifyReturnValue(method = "updateEnchantments", at = @At("RETURN"))
