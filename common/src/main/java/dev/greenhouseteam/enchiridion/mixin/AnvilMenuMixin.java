@@ -241,7 +241,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
 
         ItemEnchantments immutableEnchantments = itemEnchantments.toImmutable();
 
-
         if (!immutableEnchantments.keySet().isEmpty()) {
             if (!inputCategories.isEmpty() && inputCategories.getCategories().keySet().equals(otherCategories.getCategories().keySet()) && newCategories.getCategories().entrySet().stream().allMatch(entry -> inputCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == inputCategories.get(entry.getKey()).size() || !otherCategories.isEmpty() && otherCategories.getCategories().containsKey(entry.getKey()) && entry.getValue().size() == otherCategories.get(entry.getKey()).size()))
                 this.cost.set(1);
@@ -255,7 +254,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             return ItemStack.EMPTY;
         }
 
-        if (!mergeSlotEnchantments.isEmpty() && otherInput.has(DataComponents.STORED_ENCHANTMENTS)) {
+        if (!mergeSlotEnchantments.isEmpty() && !ItemStack.isSameItem(input, otherInput) && otherInput.has(DataComponents.STORED_ENCHANTMENTS)) {
             ItemEnchantmentCategories mergeCategories = new ItemEnchantmentCategories();
             ItemEnchantments.Mutable mergeEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
