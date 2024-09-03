@@ -254,7 +254,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
             return ItemStack.EMPTY;
         }
 
-        if (!mergeSlotEnchantments.isEmpty() && !ItemStack.isSameItem(input, otherInput) && otherInput.has(DataComponents.STORED_ENCHANTMENTS)) {
+        if (!mergeSlotEnchantments.isEmpty() && !ItemStack.isSameItem(input, otherInput) && (input.has(DataComponents.ENCHANTMENTS) || otherInput.has(DataComponents.STORED_ENCHANTMENTS))) {
             ItemEnchantmentCategories mergeCategories = new ItemEnchantmentCategories();
             ItemEnchantments.Mutable mergeEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
