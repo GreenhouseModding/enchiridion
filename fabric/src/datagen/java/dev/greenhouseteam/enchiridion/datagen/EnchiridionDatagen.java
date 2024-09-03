@@ -238,6 +238,13 @@ public class EnchiridionDatagen implements DataGeneratorEntrypoint {
             getOrCreateTagBuilder(EnchiridionTags.ItemTags.PICKAXE_ENCHANTABLE)
                     .forceAddTag(ItemTags.PICKAXES);
 
+            getOrCreateTagBuilder(ConventionalItemTags.ENCHANTABLES)
+                    .forceAddTag(EnchiridionTags.ItemTags.AXE_ENCHANTABLE)
+                    .forceAddTag(EnchiridionTags.ItemTags.ASHES_ENCHANTABLE)
+                    .forceAddTag(EnchiridionTags.ItemTags.ICE_STRIKE_ENCHANTABLE)
+                    .forceAddTag(EnchiridionTags.ItemTags.ICE_STRIKE_PRIMARY_ENCHANTABLE)
+                    .forceAddTag(EnchiridionTags.ItemTags.PICKAXE_ENCHANTABLE);
+
             getOrCreateTagBuilder(EnchiridionTags.ItemTags.INCLUSIVE_ENCHANTABLES)
                     .forceAddTag(ConventionalItemTags.ENCHANTABLES)
                     .add(Items.BOOK);
