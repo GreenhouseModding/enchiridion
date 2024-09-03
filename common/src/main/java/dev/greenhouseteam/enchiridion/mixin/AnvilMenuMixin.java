@@ -2,6 +2,7 @@ package dev.greenhouseteam.enchiridion.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.greenhouseteam.enchiridion.Enchiridion;
 import dev.greenhouseteam.enchiridion.access.MergeableAnvilAccess;
@@ -12,6 +13,7 @@ import dev.greenhouseteam.enchiridion.util.AnvilUtil;
 import dev.greenhouseteam.enchiridion.util.EnchiridionUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -97,9 +99,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu implements Mergeab
         return original || enchiridion$hasOneResult;
     }
 
-    @ModifyExpressionValue(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal =  2))
-    private boolean enchiridion$cancelBonusCostFromItem(boolean original) {
-        return true;
+    @WrapWithCondition(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;set(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;", ordinal = 1))
+    private boolean enchiridion$cancelBonusCostFromItem(ItemStack instance, DataComponentType<?> dataComponentType, Object o) {
+        return false;
     }
 
     @ModifyExpressionValue(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;areCompatible(Lnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)Z"))
