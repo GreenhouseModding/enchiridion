@@ -1,5 +1,6 @@
 package dev.greenhouseteam.enchiridion.util;
 
+import dev.greenhouseteam.enchiridion.Enchiridion;
 import dev.greenhouseteam.enchiridion.enchantment.category.EnchantmentCategory;
 import dev.greenhouseteam.enchiridion.enchantment.category.ItemEnchantmentCategories;
 import dev.greenhouseteam.enchiridion.registry.EnchiridionDataComponents;
@@ -31,10 +32,7 @@ public class TooltipUtil {
 
         enchantments.addToTooltip(tooltipContext, enchantmentComponents::add, flag);
 
-        components.sort((o1, o2) -> {
-            if (!enchantmentComponents.contains(o1) || !enchantmentComponents.contains(o2))
-                return Integer.compare(components.indexOf(o1), components.indexOf(o2));
-
+        enchantmentComponents.sort((o1, o2) -> {
             Optional<Holder.Reference<Enchantment>> o1Enchantment = tooltipContext.registries().lookupOrThrow(Registries.ENCHANTMENT).filterElements(e -> o1.contains(e.description())).listElements().findFirst();
             Optional<Holder.Reference<Enchantment>> o2Enchantment = tooltipContext.registries().lookupOrThrow(Registries.ENCHANTMENT).filterElements(e -> o2.contains(e.description())).listElements().findFirst();
 
@@ -56,16 +54,42 @@ public class TooltipUtil {
             return Integer.compare(category2Priority, categoryPriority);
         });
 
-        for (int i = 0; i < components.size(); ++i) {
-            Component component = components.get(i);
-            if (enchantmentComponents.contains(component)) {
-                Optional<Holder.Reference<Enchantment>> enchantment = tooltipContext.registries().lookupOrThrow(Registries.ENCHANTMENT).filterElements(e -> component.contains(e.description())).listElements().findFirst();
-                if (enchantment.isEmpty())
-                    return;
+        List<Component> originalComponents = new ArrayList<>(components);
+        int processed = -1;
+
+        root: for (int i = 0; i < enchantmentComponents.size(); ++i) {
+            Component component = enchantmentComponents.get(i);
+
+            Optional<Holder.Reference<Enchantment>> enchantment = tooltipContext.registries().lookupOrThrow(Registries.ENCHANTMENT).filterElements(e -> component.contains(e.description())).listElements().findFirst();
+            if (enchantment.isEmpty())
+                continue;
+
+            for (int j = 0; j < originalComponents.size(); ++j) {
+                Component toReplace = originalComponents.get(j);
+                if (enchantmentComponents.stream().noneMatch(comp -> comp.equals(toReplace)) || processed >= j)
+                    continue;
+
+                processed = j;
+
                 Holder<EnchantmentCategory> category = categories.findFirstCategory(enchantment.get());
-                if (category == null || !category.isBound())
-                    return;
-                components.set(i, components.get(i).copy().withColor(category.value().color().getValue()));
+
+                Component newComp = component.copy();
+                if (category != null && category.isBound())
+                    newComp = newComp.copy().withColor(category.value().color().getValue());
+
+                if (Enchiridion.ENCHANTMENT_DESCRIPTION_MODS.stream().anyMatch(Enchiridion.getHelper()::isModLoaded)) {
+                    int index = -1;
+                    for (int k = 0; k < originalComponents.size(); ++k)
+                        if (originalComponents.get(k).equals(component)) {
+                            index = k;
+                            break;
+                        }
+                    if (index != -1)
+                        components.set(j + 1, originalComponents.get(index + 1));
+                }
+
+                components.set(j, newComp);
+                continue root;
             }
         }
     }
