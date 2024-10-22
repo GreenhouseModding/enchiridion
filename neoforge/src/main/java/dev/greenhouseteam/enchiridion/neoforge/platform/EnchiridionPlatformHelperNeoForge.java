@@ -7,6 +7,7 @@ import dev.greenhouseteam.enchiridion.neoforge.registry.EnchiridionAttachments;
 import dev.greenhouseteam.enchiridion.network.clientbound.SyncEnchantmentLevelUpSeedsClientboundPacket;
 import dev.greenhouseteam.enchiridion.platform.EnchiridionPlatformHelper;
 import dev.greenhouseteam.enchiridion.platform.Platform;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ChunkMap;
@@ -15,10 +16,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.chunk.ChunkSource;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.common.extensions.IItemStackExtension;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Collection;
@@ -111,5 +115,10 @@ public class EnchiridionPlatformHelperNeoForge implements EnchiridionPlatformHel
     @Override
     public boolean isClientThread() {
         return EffectiveSide.get().isClient();
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return stack.supportsEnchantment(enchantment);
     }
 }

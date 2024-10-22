@@ -1,10 +1,13 @@
 package dev.greenhouseteam.enchiridion.platform;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Collection;
 
@@ -41,4 +44,6 @@ public interface EnchiridionPlatformHelper {
     boolean isFrozenByEnchantment(Entity entity);
 
     boolean isClientThread();
+
+    boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment);
 }

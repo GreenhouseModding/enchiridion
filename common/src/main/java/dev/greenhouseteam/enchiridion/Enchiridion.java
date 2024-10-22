@@ -1,7 +1,6 @@
 package dev.greenhouseteam.enchiridion;
 
 import dev.greenhouseteam.enchiridion.platform.EnchiridionPlatformHelper;
-import net.minecraft.client.searchtree.SearchTree;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -29,6 +29,7 @@ public class EnchiridionEnchantmentCategories {
                 Enchiridion.asResource("enchiridion/category/primary"),
                 Enchiridion.asResource("enchanted_book_primary"),
                 TextColor.fromLegacyFormat(ChatFormatting.GOLD),
+                false,
                 Optional.of(1),
                 30);
         context.register(PRIMARY, primary);
@@ -38,6 +39,7 @@ public class EnchiridionEnchantmentCategories {
                 Enchiridion.asResource("enchiridion/category/secondary"),
                 Enchiridion.asResource("enchanted_book_secondary"),
                 TextColor.fromLegacyFormat(ChatFormatting.BLUE),
+                false,
                 Optional.of(1),
                 20);
         context.register(SECONDARY, secondary);
@@ -47,6 +49,7 @@ public class EnchiridionEnchantmentCategories {
                 Enchiridion.asResource("enchiridion/category/tertiary"),
                 Enchiridion.asResource("enchanted_book_tertiary"),
                 TextColor.fromLegacyFormat(ChatFormatting.DARK_GREEN),
+                false,
                 Optional.of(1),
                 10);
         context.register(TERTIARY, tertiary);
@@ -56,6 +59,7 @@ public class EnchiridionEnchantmentCategories {
                 Optional.empty(),
                 Enchiridion.asResource("enchanted_book_curse"),
                 TextColor.fromLegacyFormat(ChatFormatting.RED),
+                true,
                 Optional.empty(),
                 -10);
         context.register(CURSE, curse);

@@ -8,6 +8,18 @@ plugins {
     id("me.modmuss50.mod-publish-plugin")
 }
 
+repositories {
+    maven("https://maven.blamejared.com") {
+        name = "BlameJared"
+    }
+}
+
+dependencies {
+    runtimeOnly("net.darkhax.bookshelf:bookshelf-neoforge-1.21.1:${Versions.BOOKSHELF}") { isTransitive = false }
+    implementation("net.darkhax.enchdesc:enchdesc-neoforge-1.21.1:${Versions.ENCHANTMENT_DESCRIPTIONS}") { isTransitive = false }
+    runtimeOnly("net.darkhax.pricklemc:prickle-neoforge-1.21.1:${Versions.PRICKLE}") { isTransitive = false }
+}
+
 neoForge {
     version = Versions.NEOFORGE
     parchment {

@@ -125,11 +125,17 @@ public class EnchiridionUtil {
 
     @Nullable
     public static Holder<EnchantmentCategory> getFirstEnchantmentCategory(HolderLookup.Provider registries, ItemEnchantments enchantments, ItemEnchantmentCategories categories) {
-        Optional<HolderSet.Named<Enchantment>> tooltipOrderTag = registries.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.TOOLTIP_ORDER);
-        if (tooltipOrderTag.isEmpty())
+        if (enchantments.isEmpty())
             return null;
+        List<Holder<Enchantment>> tooltipOrderTag = registries.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.TOOLTIP_ORDER).orElse(HolderSet.emptyNamed(registries.lookupOrThrow(Registries.ENCHANTMENT), null)).stream().toList();
 
-        List<Holder<Enchantment>> enchantment = tooltipOrderTag.get().stream().filter(e -> enchantments.keySet().contains(e)).toList();
+        List<Holder<Enchantment>> enchantment = new ArrayList<>(enchantments.keySet().stream().toList());
+        enchantment.sort(Comparator.comparingInt(v -> {
+            if (tooltipOrderTag.contains(v)) {
+                return tooltipOrderTag.indexOf(v);
+            }
+            return Integer.MAX_VALUE;
+        }));
 
         if (enchantment.isEmpty())
             return enchantments.keySet().stream().map(categories::findFirstCategory).filter(holder -> holder != null && holder.isBound()).max(Comparator.comparingInt(value -> value.value().priority())).orElse(null);

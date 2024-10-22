@@ -22,7 +22,7 @@ import java.util.Optional;
 public record EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                   Optional<ResourceLocation> iconLocation, Optional<ResourceLocation> fullIconLocation,
                                   Optional<ResourceLocation> enchantedBookModelLocation, Optional<ResourceLocation> fullEnchantedBookModelLocation,
-                                  TextColor color, Optional<Integer> limit, int priority) {
+                                  TextColor color, boolean spreadsWhenSwapping, Optional<Integer> limit, int priority) {
     public static final Codec<Holder<EnchantmentCategory>> CODEC = RegistryFixedCodec.create(EnchiridionRegistries.ENCHANTMENT_CATEGORY);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<EnchantmentCategory>> STREAM_CODEC = ByteBufCodecs.holderRegistry(EnchiridionRegistries.ENCHANTMENT_CATEGORY);
     public static final Codec<EnchantmentCategory> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -31,6 +31,7 @@ public record EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, C
             ResourceLocation.CODEC.optionalFieldOf("icon").forGetter(EnchantmentCategory::iconLocation),
             ResourceLocation.CODEC.optionalFieldOf("enchanted_book_model").forGetter(EnchantmentCategory::enchantedBookModelLocation),
             TextColor.CODEC.fieldOf("color").forGetter(EnchantmentCategory::color),
+            Codec.BOOL.optionalFieldOf("spreads_when_swapping", false).forGetter(EnchantmentCategory::spreadsWhenSwapping),
             Codec.INT.optionalFieldOf("limit").forGetter(EnchantmentCategory::limit),
             Codec.INT.optionalFieldOf("priority", 0).forGetter(EnchantmentCategory::priority)
     ).apply(inst, EnchantmentCategory::new));
@@ -38,25 +39,25 @@ public record EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, C
     // TODO: Builder class or methods for this?
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                ResourceLocation iconLocation, ResourceLocation enchantedBookModelLocation,
-                               TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
+                               TextColor color, boolean spreadsWhenSwapping, Optional<Integer> limit, int priority) {
+        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, spreadsWhenSwapping, limit, priority);
     }
 
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                ResourceLocation iconLocation, Optional<ResourceLocation> enchantedBookModelLocation,
-                               TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation, enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
+                               TextColor color, boolean spreadsWhenSwapping, Optional<Integer> limit, int priority) {
+        this(acceptedEnchantments, name, Optional.of(iconLocation), Optional.of(iconLocation).map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation, enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, spreadsWhenSwapping, limit, priority);
     }
 
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                Optional<ResourceLocation> iconLocation, ResourceLocation enchantedBookModelLocation,
-                               TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
+                               TextColor color, boolean spreadsWhenSwapping, Optional<Integer> limit, int priority) {
+        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), Optional.of(enchantedBookModelLocation), Optional.of(enchantedBookModelLocation).map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, spreadsWhenSwapping, limit, priority);
     }
 
     public EnchantmentCategory(HolderSet<Enchantment> acceptedEnchantments, Component name,
                                Optional<ResourceLocation> iconLocation, Optional<ResourceLocation> enchantedBookModelLocation,
-                               TextColor color, Optional<Integer> limit, int priority) {
-        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation,  enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, limit, priority);
+                               TextColor color, boolean spreadsWhenSwapping, Optional<Integer> limit, int priority) {
+        this(acceptedEnchantments, name, iconLocation, iconLocation.map(id -> id.withPath(path -> "textures/" + path + ".png")), enchantedBookModelLocation,  enchantedBookModelLocation.map(resourceLocation -> resourceLocation.withPath(string -> "item/enchiridion/" + string)), color, spreadsWhenSwapping, limit, priority);
     }
 }

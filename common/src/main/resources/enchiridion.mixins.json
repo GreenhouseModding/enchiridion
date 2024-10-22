@@ -5,15 +5,19 @@
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AnvilMenuMixin",
     "BlockMixin",
     "BowItemMixin",
     "CreativeModeTabsAccessor",
     "CrossbowItemMixin",
     "EnchantCommandMixin",
+    "EnchantmentHelperAccessor",
     "EnchantmentHelperMixin",
     "EnchantmentMenuMixin",
     "EntityMixin",
     "FishingHookMixin",
+    "ItemCombinerMenuMixin",
+    "ItemCombinerMenuResultSlotMixin",
     "ItemEnchantmentsAccessor",
     "LivingEntityMixin",
     "LootParamsAccessor",
@@ -22,13 +26,15 @@
     "ProjectileWeaponItemMixin",
     "ServerPlayerMixin",
     "TagEntryAccessor",
-    "TagLoaderMixin"
+    "TagLoaderMixin",
+    "integration.enchdesc.EnchdescModAccessor"
   ],
   "client": [
     "client.AbstractContainerScreenAccessor",
     "client.AbstractContainerScreenMixin",
     "client.ContainerEventHandlerMixin",
     "client.EnchantmentScreenMixin",
+    "client.ItemCombinerScreenMixin",
     "client.ItemRendererMixin",
     "client.LivingEntityMixin"
   ],
