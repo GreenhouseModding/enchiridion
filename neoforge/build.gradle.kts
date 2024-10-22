@@ -15,8 +15,9 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly("net.darkhax.bookshelf:bookshelf-fabric-1.21.1:${Versions.BOOKSHELF}")
-    runtimeOnly("net.darkhax.enchdesc:enchdesc-fabric-1.21.1:${Versions.ENCHANTMENT_DESCRIPTIONS}")
+    runtimeOnly("net.darkhax.bookshelf:bookshelf-neoforge-1.21.1:${Versions.BOOKSHELF}") { isTransitive = false }
+    runtimeOnly("net.darkhax.enchdesc:enchdesc-neoforge-1.21.1:${Versions.ENCHANTMENT_DESCRIPTIONS}") { isTransitive = false }
+    runtimeOnly("net.darkhax.pricklemc:prickle-neoforge-1.21.1:${Versions.PRICKLE}") { isTransitive = false }
 }
 
 neoForge {

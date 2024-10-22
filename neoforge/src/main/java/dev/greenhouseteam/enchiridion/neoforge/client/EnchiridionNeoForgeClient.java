@@ -12,6 +12,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -48,7 +49,7 @@ public class EnchiridionNeoForgeClient {
 
     @EventBusSubscriber(modid = Enchiridion.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
     public static class GameEvents {
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.HIGH)
         public static void modifyTooltip(ItemTooltipEvent event) {
             TooltipUtil.modifyEnchantmentTooltips(event.getItemStack(), event.getContext(), event.getFlags(), event.getToolTip());
         }

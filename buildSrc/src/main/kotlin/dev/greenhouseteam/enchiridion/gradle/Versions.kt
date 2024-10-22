@@ -10,14 +10,15 @@ object Versions {
 
     const val BOOKSHELF = "21.1.9"
     const val ENCHANTMENT_DESCRIPTIONS = "21.1.5"
+    const val PRICKLE = "21.1.5"
 
     const val FABRIC_API = "0.102.0+1.21.1"
-    const val FABRIC_LOADER = "0.16.0"
-    const val MOD_MENU = "11.0.1"
+    const val FABRIC_LOADER = "0.16.7"
+    const val MOD_MENU = "11.0.3"
     const val FABRIC_LOADER_RANGE = ">=0.15"
     const val FABRIC_MINECRAFT_RANGE = ">=1.21"
 
-    const val NEOFORGE = "21.1.4"
+    const val NEOFORGE = "21.1.72"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
     const val NEOFORGE_MINECRAFT_RANGE = "[1.21,)"
 

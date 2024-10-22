@@ -12,8 +12,6 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
-import java.util.concurrent.CompletableFuture;
-
 public class EnchiridionFabricClient implements ClientModInitializer {
 
     @Override

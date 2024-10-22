@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net/minecraft/world/inventory/ItemCombinerMenu$2")
 public class ItemCombinerMenuResultSlotMixin {
-    @Shadow @Final
-    ItemCombinerMenu field_22483;
+    @Shadow(aliases = { "this$0", "field_22483" }) @Final
+    ItemCombinerMenu this$0;
 
     @Inject(method = "onTake", at = @At("HEAD"))
     private void enchiridion$setHasItems(Player player, ItemStack itemStack, CallbackInfo ci) {
-        if (field_22483 instanceof MergeableAnvilAccess access && access.enchiridion$merged())
+        if (this$0 instanceof MergeableAnvilAccess access && access.enchiridion$merged())
             access.enchiridion$setHasOneResult(!access.enchiridion$hasOneResult());
     }
 }
