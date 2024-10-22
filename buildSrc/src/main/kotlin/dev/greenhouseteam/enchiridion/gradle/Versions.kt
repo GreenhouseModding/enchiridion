@@ -8,6 +8,8 @@ object Versions {
     const val NEOFORM = "$MINECRAFT-20240808.144430"
     const val PARCHMENT = "2024.07.07"
 
+    const val BOOKSHELF = "21.1.9"
+    const val ENCHANTMENT_DESCRIPTIONS = "21.1.5"
 
     const val FABRIC_API = "0.102.0+1.21.1"
     const val FABRIC_LOADER = "0.16.0"

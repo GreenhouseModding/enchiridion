@@ -9,9 +9,11 @@ plugins {
 }
 
 repositories {
-    maven {
+    maven("https://maven.terraformersmc.com/") {
         name = "TerraformersMC"
-        url = uri("https://maven.terraformersmc.com/")
+    }
+    maven("https://maven.blamejared.com") {
+        name = "BlameJared"
     }
 }
 
@@ -31,6 +33,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${Versions.FABRIC_LOADER}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.FABRIC_API}")
     modLocalRuntime("com.terraformersmc:modmenu:${Versions.MOD_MENU}")
+    modLocalRuntime("net.darkhax.bookshelf:bookshelf-fabric-1.21.1:${Versions.BOOKSHELF}")
+    modLocalRuntime("net.darkhax.enchdesc:enchdesc-fabric-1.21.1:${Versions.ENCHANTMENT_DESCRIPTIONS}")
 }
 
 loom {
