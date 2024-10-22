@@ -15,6 +15,22 @@ sourceSets {
     }
 }
 
+repositories {
+    maven("https://maven.blamejared.com") {
+        name = "BlameJared"
+    }
+}
+
+dependencies {
+    compileOnly("io.github.llamalad7:mixinextras-common:${Versions.MIXIN_EXTRAS}")
+    annotationProcessor("io.github.llamalad7:mixinextras-common:${Versions.MIXIN_EXTRAS}")
+    compileOnly("net.fabricmc:sponge-mixin:${Versions.FABRIC_MIXIN}")
+
+    compileOnly("net.darkhax.bookshelf:bookshelf-common-1.21.1:${Versions.BOOKSHELF}") { isTransitive = false }
+    compileOnly("net.darkhax.enchdesc:enchdesc-common-1.21.1:${Versions.ENCHANTMENT_DESCRIPTIONS}") { isTransitive = false }
+    compileOnly("net.darkhax.pricklemc:prickle-common-1.21.1:${Versions.PRICKLE}") { isTransitive = false }
+}
+
 neoForge {
     neoFormVersion = Versions.NEOFORM
     parchment {
@@ -27,12 +43,6 @@ neoForge {
     if (at.exists())
         setAccessTransformers(at)
     validateAccessTransformers = true
-}
-
-dependencies {
-    compileOnly("io.github.llamalad7:mixinextras-common:${Versions.MIXIN_EXTRAS}")
-    annotationProcessor("io.github.llamalad7:mixinextras-common:${Versions.MIXIN_EXTRAS}")
-    compileOnly("net.fabricmc:sponge-mixin:${Versions.FABRIC_MIXIN}")
 }
 
 configurations {

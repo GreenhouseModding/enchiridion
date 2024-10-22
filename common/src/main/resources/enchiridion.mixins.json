@@ -26,7 +26,8 @@
     "ProjectileWeaponItemMixin",
     "ServerPlayerMixin",
     "TagEntryAccessor",
-    "TagLoaderMixin"
+    "TagLoaderMixin",
+    "integration.enchdesc.EnchdescModAccessor"
   ],
   "client": [
     "client.AbstractContainerScreenAccessor",
